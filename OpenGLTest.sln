@@ -5,6 +5,535 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLTest", "OpenGLTest\OpenGLTest.vcxproj", "{8E783313-C172-4DE9-82D4-CFDC382CFE53}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "glfw", "glfw", "{9F88A17A-AB74-425E-9B49-917AE73BEA17}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\.appveyor.yml = glfw\.appveyor.yml
+		glfw\.git = glfw\.git
+		glfw\.gitattributes = glfw\.gitattributes
+		glfw\.gitignore = glfw\.gitignore
+		glfw\.mailmap = glfw\.mailmap
+		glfw\.travis.yml = glfw\.travis.yml
+		glfw\CMakeLists.txt = glfw\CMakeLists.txt
+		glfw\LICENSE.md = glfw\LICENSE.md
+		glfw\README.md = glfw\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMake", "CMake", "{293066D5-96AE-4A22-B7D4-019E20662495}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\CMake\cmake_uninstall.cmake.in = glfw\CMake\cmake_uninstall.cmake.in
+		glfw\CMake\GenerateMappings.cmake = glfw\CMake\GenerateMappings.cmake
+		glfw\CMake\glfw3.pc.in = glfw\CMake\glfw3.pc.in
+		glfw\CMake\glfw3Config.cmake.in = glfw\CMake\glfw3Config.cmake.in
+		glfw\CMake\i686-w64-mingw32-clang.cmake = glfw\CMake\i686-w64-mingw32-clang.cmake
+		glfw\CMake\i686-w64-mingw32.cmake = glfw\CMake\i686-w64-mingw32.cmake
+		glfw\CMake\Info.plist.in = glfw\CMake\Info.plist.in
+		glfw\CMake\x86_64-w64-mingw32-clang.cmake = glfw\CMake\x86_64-w64-mingw32-clang.cmake
+		glfw\CMake\x86_64-w64-mingw32.cmake = glfw\CMake\x86_64-w64-mingw32.cmake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{9FB4E1DF-EFD6-4DAE-A0E0-6A33311A38AF}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\CMake\modules\FindEpollShim.cmake = glfw\CMake\modules\FindEpollShim.cmake
+		glfw\CMake\modules\FindOSMesa.cmake = glfw\CMake\modules\FindOSMesa.cmake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{00C6EC11-2BAB-41B7-AC60-06081B36A375}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\deps\getopt.c = glfw\deps\getopt.c
+		glfw\deps\getopt.h = glfw\deps\getopt.h
+		glfw\deps\glad_gl.c = glfw\deps\glad_gl.c
+		glfw\deps\glad_vulkan.c = glfw\deps\glad_vulkan.c
+		glfw\deps\linmath.h = glfw\deps\linmath.h
+		glfw\deps\nuklear.h = glfw\deps\nuklear.h
+		glfw\deps\nuklear_glfw_gl2.h = glfw\deps\nuklear_glfw_gl2.h
+		glfw\deps\stb_image_write.h = glfw\deps\stb_image_write.h
+		glfw\deps\tinycthread.c = glfw\deps\tinycthread.c
+		glfw\deps\tinycthread.h = glfw\deps\tinycthread.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "glad", "glad", "{37CDEC2E-BA7B-49AE-80EA-15CA36E2BC0A}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\deps\glad\gl.h = glfw\deps\glad\gl.h
+		glfw\deps\glad\khrplatform.h = glfw\deps\glad\khrplatform.h
+		glfw\deps\glad\vk_platform.h = glfw\deps\glad\vk_platform.h
+		glfw\deps\glad\vulkan.h = glfw\deps\glad\vulkan.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mingw", "mingw", "{9A9735CF-853C-4BD1-BCEC-729D54658EAC}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\deps\mingw\_mingw_dxhelper.h = glfw\deps\mingw\_mingw_dxhelper.h
+		glfw\deps\mingw\dinput.h = glfw\deps\mingw\dinput.h
+		glfw\deps\mingw\xinput.h = glfw\deps\mingw\xinput.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vs2008", "vs2008", "{BD1D26E0-FBAB-4B13-91C0-80CACC75CDD9}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\deps\vs2008\stdint.h = glfw\deps\vs2008\stdint.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3FAE0C1D-B87D-47DE-A969-FD68D1113E57}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\docs\build.dox = glfw\docs\build.dox
+		glfw\docs\CMakeLists.txt = glfw\docs\CMakeLists.txt
+		glfw\docs\CODEOWNERS = glfw\docs\CODEOWNERS
+		glfw\docs\compat.dox = glfw\docs\compat.dox
+		glfw\docs\compile.dox = glfw\docs\compile.dox
+		glfw\docs\context.dox = glfw\docs\context.dox
+		glfw\docs\CONTRIBUTING.md = glfw\docs\CONTRIBUTING.md
+		glfw\docs\Doxyfile.in = glfw\docs\Doxyfile.in
+		glfw\docs\DoxygenLayout.xml = glfw\docs\DoxygenLayout.xml
+		glfw\docs\extra.css = glfw\docs\extra.css
+		glfw\docs\extra.css.map = glfw\docs\extra.css.map
+		glfw\docs\extra.scss = glfw\docs\extra.scss
+		glfw\docs\footer.html = glfw\docs\footer.html
+		glfw\docs\header.html = glfw\docs\header.html
+		glfw\docs\input.dox = glfw\docs\input.dox
+		glfw\docs\internal.dox = glfw\docs\internal.dox
+		glfw\docs\intro.dox = glfw\docs\intro.dox
+		glfw\docs\main.dox = glfw\docs\main.dox
+		glfw\docs\monitor.dox = glfw\docs\monitor.dox
+		glfw\docs\moving.dox = glfw\docs\moving.dox
+		glfw\docs\news.dox = glfw\docs\news.dox
+		glfw\docs\quick.dox = glfw\docs\quick.dox
+		glfw\docs\spaces.svg = glfw\docs\spaces.svg
+		glfw\docs\SUPPORT.md = glfw\docs\SUPPORT.md
+		glfw\docs\vulkan.dox = glfw\docs\vulkan.dox
+		glfw\docs\window.dox = glfw\docs\window.dox
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{14432B0B-2EFE-4181-B410-B49055B357E6}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\examples\boing.c = glfw\examples\boing.c
+		glfw\examples\CMakeLists.txt = glfw\examples\CMakeLists.txt
+		glfw\examples\gears.c = glfw\examples\gears.c
+		glfw\examples\glfw.icns = glfw\examples\glfw.icns
+		glfw\examples\glfw.ico = glfw\examples\glfw.ico
+		glfw\examples\glfw.rc = glfw\examples\glfw.rc
+		glfw\examples\heightmap.c = glfw\examples\heightmap.c
+		glfw\examples\offscreen.c = glfw\examples\offscreen.c
+		glfw\examples\particles.c = glfw\examples\particles.c
+		glfw\examples\sharing.c = glfw\examples\sharing.c
+		glfw\examples\splitview.c = glfw\examples\splitview.c
+		glfw\examples\triangle-opengl.c = glfw\examples\triangle-opengl.c
+		glfw\examples\wave.c = glfw\examples\wave.c
+		glfw\examples\windows.c = glfw\examples\windows.c
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{3063236E-1192-4390-9A0E-8382E04FE474}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GLFW", "GLFW", "{BB9610C4-8A89-4B0F-A9E7-1B5BAAB2C4F4}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\include\GLFW\glfw3.h = glfw\include\GLFW\glfw3.h
+		glfw\include\GLFW\glfw3native.h = glfw\include\GLFW\glfw3native.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "out", "out", "{9E41AF52-8760-4446-8A6E-78BE4F971AED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B7478496-EEC8-4A8C-AE1D-D87872310C13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64-Debug (default)", "x64-Debug (default)", "{DB36B128-F7B2-4A6C-B903-F08765903AFE}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\build.ninja = glfw\out\build\x64-Debug (default)\build.ninja
+		glfw\out\build\x64-Debug (default)\cmake_install.cmake = glfw\out\build\x64-Debug (default)\cmake_install.cmake
+		glfw\out\build\x64-Debug (default)\cmake_uninstall.cmake = glfw\out\build\x64-Debug (default)\cmake_uninstall.cmake
+		glfw\out\build\x64-Debug (default)\CMakeCache.txt = glfw\out\build\x64-Debug (default)\CMakeCache.txt
+		glfw\out\build\x64-Debug (default)\VSInheritEnvironments.txt = glfw\out\build\x64-Debug (default)\VSInheritEnvironments.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".cmake", ".cmake", "{819122AA-0CC0-46A8-8A93-CE429D6004C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{27370F16-72F6-45B2-9E0B-481284D89449}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v1", "v1", "{4C1B1397-FE09-4105-A0CD-546396DDA5C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "query", "query", "{B68793D2-FDA6-46C0-87DF-E7B5B1762E60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client-MicrosoftVS", "client-MicrosoftVS", "{269532AF-C2D4-40A0-B1E1-198E29A375EB}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\query\client-MicrosoftVS\query.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\query\client-MicrosoftVS\query.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "reply", "reply", "{969B5979-7A7D-4465-9C85-0C0FF34907A7}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\cache-v2-5f0e1e166781abf88542.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\cache-v2-5f0e1e166781abf88542.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\cmakeFiles-v1-ca3ba754ff737cf02f18.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\cmakeFiles-v1-ca3ba754ff737cf02f18.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\codemodel-v2-b7f2a6412579c4476d28.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\codemodel-v2-b7f2a6412579c4476d28.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\index-2021-01-04T19-19-29-0872.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\index-2021-01-04T19-19-29-0872.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-boing-Debug-d402598a4181b504ad9d.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-boing-Debug-d402598a4181b504ad9d.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-clipboard-Debug-300a5e4b1349988e8850.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-clipboard-Debug-300a5e4b1349988e8850.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-cursor-Debug-b96675f783a8ca401b3e.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-cursor-Debug-b96675f783a8ca401b3e.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-empty-Debug-41666f5780060d3e5637.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-empty-Debug-41666f5780060d3e5637.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-events-Debug-91300bffa0842b36f6c8.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-events-Debug-91300bffa0842b36f6c8.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-gamma-Debug-e4d91bd39f9a526f24b0.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-gamma-Debug-e4d91bd39f9a526f24b0.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-gears-Debug-1e507129f858ba06d2e1.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-gears-Debug-1e507129f858ba06d2e1.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-glfw-Debug-b37761854af755b06f08.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-glfw-Debug-b37761854af755b06f08.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-glfwinfo-Debug-01b368d3bd85a78a7b4b.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-glfwinfo-Debug-01b368d3bd85a78a7b4b.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-heightmap-Debug-fea71fcf296a524f1d0a.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-heightmap-Debug-fea71fcf296a524f1d0a.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-icon-Debug-8b7673acd01121f10a05.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-icon-Debug-8b7673acd01121f10a05.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-iconify-Debug-8375e47ba680c18270ec.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-iconify-Debug-8375e47ba680c18270ec.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-inputlag-Debug-bbcec34e948b46bb50d9.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-inputlag-Debug-bbcec34e948b46bb50d9.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-joysticks-Debug-62caf038079204ced772.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-joysticks-Debug-62caf038079204ced772.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-monitors-Debug-e07b92f4448fa215b228.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-monitors-Debug-e07b92f4448fa215b228.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-msaa-Debug-8bf27c571247ecd6c266.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-msaa-Debug-8bf27c571247ecd6c266.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-offscreen-Debug-a013341e9e622f1d0068.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-offscreen-Debug-a013341e9e622f1d0068.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-particles-Debug-51e2ee1d0fede6b0e3fb.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-particles-Debug-51e2ee1d0fede6b0e3fb.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-reopen-Debug-7d250aa5b10d285d17af.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-reopen-Debug-7d250aa5b10d285d17af.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-sharing-Debug-34071a851795fbfe45e9.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-sharing-Debug-34071a851795fbfe45e9.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-splitview-Debug-bc72532b684fa4d2b3b8.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-splitview-Debug-bc72532b684fa4d2b3b8.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-tearing-Debug-b1dbc87fff9a4e8ced9e.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-tearing-Debug-b1dbc87fff9a4e8ced9e.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-threads-Debug-8d7c92faf34c8cd97e5c.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-threads-Debug-8d7c92faf34c8cd97e5c.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-timeout-Debug-56408bec56292d0bbaff.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-timeout-Debug-56408bec56292d0bbaff.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-title-Debug-ba29c4e5be0de5e3d0c0.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-title-Debug-ba29c4e5be0de5e3d0c0.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-triangle-opengl-Debug-6ef29419c26781129bd9.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-triangle-opengl-Debug-6ef29419c26781129bd9.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-triangle-vulkan-Debug-909c740521e0324e5682.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-triangle-vulkan-Debug-909c740521e0324e5682.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-uninstall-Debug-0188d41cdde2083c1391.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-uninstall-Debug-0188d41cdde2083c1391.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-wave-Debug-b6e944e969760a7d1502.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-wave-Debug-b6e944e969760a7d1502.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-window-Debug-edcd65d18d01f1b3fdb7.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-window-Debug-edcd65d18d01f1b3fdb7.json
+		glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-windows-Debug-d95f48856f065d268fd5.json = glfw\out\build\x64-Debug (default)\.cmake\api\v1\reply\target-windows-Debug-d95f48856f065d268fd5.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMakeFiles", "CMakeFiles", "{28262931-CC70-4CF4-80DE-A8704B59C1D9}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\CMakeFiles\cmake.check_cache = glfw\out\build\x64-Debug (default)\CMakeFiles\cmake.check_cache
+		glfw\out\build\x64-Debug (default)\CMakeFiles\CMakeError.log = glfw\out\build\x64-Debug (default)\CMakeFiles\CMakeError.log
+		glfw\out\build\x64-Debug (default)\CMakeFiles\CMakeOutput.log = glfw\out\build\x64-Debug (default)\CMakeFiles\CMakeOutput.log
+		glfw\out\build\x64-Debug (default)\CMakeFiles\rules.ninja = glfw\out\build\x64-Debug (default)\CMakeFiles\rules.ninja
+		glfw\out\build\x64-Debug (default)\CMakeFiles\TargetDirectories.txt = glfw\out\build\x64-Debug (default)\CMakeFiles\TargetDirectories.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.18.20081302-MSVC_2", "3.18.20081302-MSVC_2", "{A1FCC1E4-6527-4361-9532-55DA6B81B2A6}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeCCompiler.cmake = glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeCCompiler.cmake
+		glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeDetermineCompilerABI_C.bin = glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeDetermineCompilerABI_C.bin
+		glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeRCCompiler.cmake = glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeRCCompiler.cmake
+		glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeSystem.cmake = glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CMakeSystem.cmake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompilerIdC", "CompilerIdC", "{0102A396-A31B-469F-B8D8-31874B7AB8A5}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CompilerIdC\CMakeCCompilerId.c = glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CompilerIdC\CMakeCCompilerId.c
+		glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CompilerIdC\CMakeCCompilerId.exe = glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CompilerIdC\CMakeCCompilerId.exe
+		glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CompilerIdC\CMakeCCompilerId.obj = glfw\out\build\x64-Debug (default)\CMakeFiles\3.18.20081302-MSVC_2\CompilerIdC\CMakeCCompilerId.obj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tmp", "tmp", "{1DC0AA6A-43B0-4C28-AB0D-012229207773}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMakeTmp", "CMakeTmp", "{1B49E492-6BB1-4286-9C69-CABD70EA815E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Export", "Export", "{1A76DD2B-DB27-433D-9FC1-D3D844BDE853}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{B7EE005C-FC29-4B69-B732-63708CBA4C65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cmake", "cmake", "{357CCA16-AE43-4406-83CA-F117BD7E54B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "glfw3", "glfw3", "{B6FABE52-661A-451D-BAED-4BD8041264C4}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\CMakeFiles\Export\lib\cmake\glfw3\glfw3Targets-debug.cmake = glfw\out\build\x64-Debug (default)\CMakeFiles\Export\lib\cmake\glfw3\glfw3Targets-debug.cmake
+		glfw\out\build\x64-Debug (default)\CMakeFiles\Export\lib\cmake\glfw3\glfw3Targets.cmake = glfw\out\build\x64-Debug (default)\CMakeFiles\Export\lib\cmake\glfw3\glfw3Targets.cmake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShowIncludes", "ShowIncludes", "{F0122BBC-56E4-4D3F-8E47-B950747F2E9D}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\CMakeFiles\ShowIncludes\foo.h = glfw\out\build\x64-Debug (default)\CMakeFiles\ShowIncludes\foo.h
+		glfw\out\build\x64-Debug (default)\CMakeFiles\ShowIncludes\main.c = glfw\out\build\x64-Debug (default)\CMakeFiles\ShowIncludes\main.c
+		glfw\out\build\x64-Debug (default)\CMakeFiles\ShowIncludes\main.obj = glfw\out\build\x64-Debug (default)\CMakeFiles\ShowIncludes\main.obj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{7B3D881A-47CF-4743-84AE-4B0E2BF86E64}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\examples\cmake_install.cmake = glfw\out\build\x64-Debug (default)\examples\cmake_install.cmake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMakeFiles", "CMakeFiles", "{908353EA-A3B1-4E2A-9284-44B91E4AC6D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "boing.dir", "boing.dir", "{0F2D4F4D-57D9-4D47-AC5C-81CDB9C86218}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{7E054543-C8E7-435A-833E-D60A72BD13BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{57A39601-C3E5-4E07-BE4F-69CF4246B436}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gears.dir", "gears.dir", "{49931CDE-D178-4A3A-B560-1039EFC8082F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{667F3820-4705-44E0-AF69-4B90FECF5EC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{C8AA91B3-1731-42FF-9B62-0F1AA0C92575}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "heightmap.dir", "heightmap.dir", "{00F613CF-C44C-4462-9F9A-0EA32B67CB90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{F1BBAB65-65A6-48E9-A644-3988EE5B2B37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{197D517B-8C46-4FEF-917A-18B5E8FE4F4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "offscreen.dir", "offscreen.dir", "{801AC868-86A3-4C06-8F98-021B8FA03CA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{05FE5947-895E-4203-A8CB-CBC40E6045EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{CA28FEB8-C14B-40B8-A5DE-B98C5B00C86F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "particles.dir", "particles.dir", "{03EBE84C-E42D-45A2-A7C9-6669277E9A2C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{AD6B013F-A121-43A1-8FC6-AB5FC4620C82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{09955DA4-42B7-43D3-A65E-2B7AEFFDED3D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sharing.dir", "sharing.dir", "{01A1F32B-C6C4-4ACC-B92C-072D8D8994BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{64E62F5E-89F1-48F8-BBC7-2D179A1EDEB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{38AA9AC3-9D1F-49EA-A7BC-6B962D7D8234}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "splitview.dir", "splitview.dir", "{0390D6EC-C06E-4298-ADBD-8263E4598153}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{0D4153B7-7FF4-4A1E-BE6F-54BC9E1FDD66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{8338EFFC-4F86-46AE-A8DB-B4A09645E402}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "triangle-opengl.dir", "triangle-opengl.dir", "{7D35EEDF-59D7-4BD3-A08C-A74D4B421A1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{AF0A5FF0-1CEB-4611-8563-E6678DA8298A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{E0980E95-A28A-4BCE-A2C9-77E5464D3860}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wave.dir", "wave.dir", "{3F5010C3-1AB5-4CB4-9899-FF1E48572667}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{2EFB1C65-BEA2-4646-9DE0-D8DFBA3D626C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{B6EE0BD5-4255-4E07-80B3-66372EF7E015}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "windows.dir", "windows.dir", "{3EDA1A2A-64C9-4C3C-9F72-4ABFE6F223F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{0F34C3B4-D09F-4FC9-879F-5D848FB8E81D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{FBB0ACB1-9E0F-4038-BAAE-5CA956BDC3F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D308385-4EEB-463D-9453-E575340466CC}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\src\cmake_install.cmake = glfw\out\build\x64-Debug (default)\src\cmake_install.cmake
+		glfw\out\build\x64-Debug (default)\src\glfw3.pc = glfw\out\build\x64-Debug (default)\src\glfw3.pc
+		glfw\out\build\x64-Debug (default)\src\glfw3Config.cmake = glfw\out\build\x64-Debug (default)\src\glfw3Config.cmake
+		glfw\out\build\x64-Debug (default)\src\glfw3ConfigVersion.cmake = glfw\out\build\x64-Debug (default)\src\glfw3ConfigVersion.cmake
+		glfw\out\build\x64-Debug (default)\src\glfw_config.h = glfw\out\build\x64-Debug (default)\src\glfw_config.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMakeFiles", "CMakeFiles", "{150BCB77-3DB0-4904-BD22-4398A2192DE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "glfw.dir", "glfw.dir", "{8B3F4E99-1606-4DC4-8460-57E5B44133F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{0453851B-9E3B-430C-9984-FB5828EF2AE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Temporary", "Temporary", "{1D9D236A-8578-4921-8BD0-130DA6E02B89}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\Testing\Temporary\LastTest.log = glfw\out\build\x64-Debug (default)\Testing\Temporary\LastTest.log
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5C3B9BA9-2F6D-40A4-A0C1-52C4C09209DD}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\out\build\x64-Debug (default)\tests\cmake_install.cmake = glfw\out\build\x64-Debug (default)\tests\cmake_install.cmake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMakeFiles", "CMakeFiles", "{EB888CB1-B9E0-4A97-865D-33275B840E31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clipboard.dir", "clipboard.dir", "{777C66C4-0696-4F8C-8810-957CC43DFB9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{A087D8C8-EC87-4675-B130-CD547909BDB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{B76A4AC3-F1D1-448A-A6C0-BBF282848776}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cursor.dir", "cursor.dir", "{A280C9EA-8691-4BD6-BECE-CD39EE208894}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{0A368F20-083D-4879-82C1-B0817237B6EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{817EDED3-B743-4EC0-8249-22C38EE7A607}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "empty.dir", "empty.dir", "{335F7C15-707F-43CE-94C7-14E1F1148CF3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{A07FB3B6-B223-41C7-8E0E-585E903B226E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{3FCB045D-6B84-42A9-8F74-0FA4D4FE3A40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "events.dir", "events.dir", "{220A2BC9-09FF-47F3-8309-8BE96B0E9836}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{C4360E6C-9655-4CAC-83AD-E89037F2851F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{14FA0450-FB05-4217-99DE-0C830910351D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gamma.dir", "gamma.dir", "{25DA00DE-D29F-489A-BA64-32989A6F7D9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{EE3B50F6-6E9C-4F7D-B22F-5EC724B35D2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{3E15A7F9-704D-4487-ABDC-47F13AB9448F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "glfwinfo.dir", "glfwinfo.dir", "{5ACBFE25-CA5B-4B76-9C8F-2A57F3E4B516}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{0E11C664-D6FA-4725-8C33-DB4381C9FF3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{91E6C6D7-4785-4F48-A725-4CC9568286B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icon.dir", "icon.dir", "{685BA432-E730-4590-8B5B-DDED37422AAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{8FC4331C-A253-404A-B79A-227FD86FA5E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{6302DB63-6972-42FC-99C4-8EE9A8DCBE46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iconify.dir", "iconify.dir", "{D40797CC-6325-4F94-A6B4-7BF2831DCBBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{E315E649-8481-476A-B1F6-57100C99DAC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{2C53BA38-915A-4252-88A8-281A40CDAEEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "inputlag.dir", "inputlag.dir", "{B3A3AB63-2145-40F5-8592-6FB2FA75230B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{9B4E6FAC-47E6-4982-9862-429A301B3D2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{B5D59D76-2DBA-4739-84B8-B783B5594710}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "joysticks.dir", "joysticks.dir", "{5060B03F-FB7B-4BA0-9703-27DD6992335B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{99037E8B-15DB-44B0-BB9B-172B278778B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{A10555F6-2D8E-4E48-A822-05DE9AAFE37B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "monitors.dir", "monitors.dir", "{B9A35522-4194-4087-9E7B-0F106C222384}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{5D9744EA-02F9-407D-9508-A4CAC4FBD671}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{B9CE6632-8CD7-4E1D-AEE5-B58D3C863EA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msaa.dir", "msaa.dir", "{1AE94A4B-FE42-4F36-94D7-A9A29B00D2CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{BD9542A4-3CA4-4477-9909-C928DF9B2861}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{FA6B3EFC-6693-47FD-92EE-8D451090BDE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "reopen.dir", "reopen.dir", "{7943792B-D751-4C0B-B864-E017F96FB2F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{D468D270-7B96-47BC-B34D-3AF0E25E8684}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{66FA7713-4BE2-413A-9585-E1FEFEBCF55A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tearing.dir", "tearing.dir", "{20B5ACB1-C4B3-4C2B-8A19-A18499233C29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{12414C29-F0B5-42B3-92B9-523A34991C2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{93D11B17-7D91-4355-B581-9297461163EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "threads.dir", "threads.dir", "{1D4922C1-61EC-4509-A1CB-0FAF404726EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{033131AD-4520-43DE-81EB-E5C997119BA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{8B3A6ECE-9DD3-4FA8-834D-E7E316B711E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "timeout.dir", "timeout.dir", "{62E912AA-0209-4614-8311-76D45AA81032}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{18E4390E-26E7-4649-9B38-4C8974D5BFCB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{2CB2BB27-7529-45A5-B956-0C48A756064D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "title.dir", "title.dir", "{636B5AA2-E27C-4A51-92BB-C9EAE76CEA49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{19FA84AE-EA56-407D-ACBB-8CBFA977A173}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{92F63E8A-8AE9-4857-9F3E-17008905978D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "triangle-vulkan.dir", "triangle-vulkan.dir", "{7CF6DD21-63B4-40DA-9C8D-39377D0BAC4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{342B6F5D-9819-441E-8F3F-A6ACEFD5891F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{10B32AE6-FD56-4395-A774-96D41DF59777}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "window.dir", "window.dir", "{C93D8A77-951B-4107-A189-98F324A705AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{725FADD1-30B6-475C-89E9-CFF492E0D463}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{0879F36E-08C5-416A-8469-3477FD1CD736}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6960083D-869D-4F7F-ADFD-C77E060C1061}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\src\CMakeLists.txt = glfw\src\CMakeLists.txt
+		glfw\src\cocoa_init.m = glfw\src\cocoa_init.m
+		glfw\src\cocoa_joystick.h = glfw\src\cocoa_joystick.h
+		glfw\src\cocoa_joystick.m = glfw\src\cocoa_joystick.m
+		glfw\src\cocoa_monitor.m = glfw\src\cocoa_monitor.m
+		glfw\src\cocoa_platform.h = glfw\src\cocoa_platform.h
+		glfw\src\cocoa_time.c = glfw\src\cocoa_time.c
+		glfw\src\cocoa_window.m = glfw\src\cocoa_window.m
+		glfw\src\context.c = glfw\src\context.c
+		glfw\src\egl_context.c = glfw\src\egl_context.c
+		glfw\src\egl_context.h = glfw\src\egl_context.h
+		glfw\src\glfw.rc.in = glfw\src\glfw.rc.in
+		glfw\src\glfw_config.h.in = glfw\src\glfw_config.h.in
+		glfw\src\glx_context.c = glfw\src\glx_context.c
+		glfw\src\glx_context.h = glfw\src\glx_context.h
+		glfw\src\init.c = glfw\src\init.c
+		glfw\src\input.c = glfw\src\input.c
+		glfw\src\internal.h = glfw\src\internal.h
+		glfw\src\linux_joystick.c = glfw\src\linux_joystick.c
+		glfw\src\linux_joystick.h = glfw\src\linux_joystick.h
+		glfw\src\mappings.h = glfw\src\mappings.h
+		glfw\src\mappings.h.in = glfw\src\mappings.h.in
+		glfw\src\monitor.c = glfw\src\monitor.c
+		glfw\src\nsgl_context.h = glfw\src\nsgl_context.h
+		glfw\src\nsgl_context.m = glfw\src\nsgl_context.m
+		glfw\src\null_init.c = glfw\src\null_init.c
+		glfw\src\null_joystick.c = glfw\src\null_joystick.c
+		glfw\src\null_joystick.h = glfw\src\null_joystick.h
+		glfw\src\null_monitor.c = glfw\src\null_monitor.c
+		glfw\src\null_platform.h = glfw\src\null_platform.h
+		glfw\src\null_window.c = glfw\src\null_window.c
+		glfw\src\osmesa_context.c = glfw\src\osmesa_context.c
+		glfw\src\osmesa_context.h = glfw\src\osmesa_context.h
+		glfw\src\posix_thread.c = glfw\src\posix_thread.c
+		glfw\src\posix_thread.h = glfw\src\posix_thread.h
+		glfw\src\posix_time.c = glfw\src\posix_time.c
+		glfw\src\posix_time.h = glfw\src\posix_time.h
+		glfw\src\vulkan.c = glfw\src\vulkan.c
+		glfw\src\wgl_context.c = glfw\src\wgl_context.c
+		glfw\src\wgl_context.h = glfw\src\wgl_context.h
+		glfw\src\win32_init.c = glfw\src\win32_init.c
+		glfw\src\win32_joystick.c = glfw\src\win32_joystick.c
+		glfw\src\win32_joystick.h = glfw\src\win32_joystick.h
+		glfw\src\win32_monitor.c = glfw\src\win32_monitor.c
+		glfw\src\win32_platform.h = glfw\src\win32_platform.h
+		glfw\src\win32_thread.c = glfw\src\win32_thread.c
+		glfw\src\win32_time.c = glfw\src\win32_time.c
+		glfw\src\win32_window.c = glfw\src\win32_window.c
+		glfw\src\window.c = glfw\src\window.c
+		glfw\src\wl_init.c = glfw\src\wl_init.c
+		glfw\src\wl_monitor.c = glfw\src\wl_monitor.c
+		glfw\src\wl_platform.h = glfw\src\wl_platform.h
+		glfw\src\wl_window.c = glfw\src\wl_window.c
+		glfw\src\x11_init.c = glfw\src\x11_init.c
+		glfw\src\x11_monitor.c = glfw\src\x11_monitor.c
+		glfw\src\x11_platform.h = glfw\src\x11_platform.h
+		glfw\src\x11_window.c = glfw\src\x11_window.c
+		glfw\src\xkb_unicode.c = glfw\src\xkb_unicode.c
+		glfw\src\xkb_unicode.h = glfw\src\xkb_unicode.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{76C8731B-E9F5-4E01-921C-FD822080D819}"
+	ProjectSection(SolutionItems) = preProject
+		glfw\tests\clipboard.c = glfw\tests\clipboard.c
+		glfw\tests\CMakeLists.txt = glfw\tests\CMakeLists.txt
+		glfw\tests\cursor.c = glfw\tests\cursor.c
+		glfw\tests\empty.c = glfw\tests\empty.c
+		glfw\tests\events.c = glfw\tests\events.c
+		glfw\tests\gamma.c = glfw\tests\gamma.c
+		glfw\tests\glfwinfo.c = glfw\tests\glfwinfo.c
+		glfw\tests\icon.c = glfw\tests\icon.c
+		glfw\tests\iconify.c = glfw\tests\iconify.c
+		glfw\tests\inputlag.c = glfw\tests\inputlag.c
+		glfw\tests\joysticks.c = glfw\tests\joysticks.c
+		glfw\tests\monitors.c = glfw\tests\monitors.c
+		glfw\tests\msaa.c = glfw\tests\msaa.c
+		glfw\tests\reopen.c = glfw\tests\reopen.c
+		glfw\tests\tearing.c = glfw\tests\tearing.c
+		glfw\tests\threads.c = glfw\tests\threads.c
+		glfw\tests\timeout.c = glfw\tests\timeout.c
+		glfw\tests\title.c = glfw\tests\title.c
+		glfw\tests\triangle-vulkan.c = glfw\tests\triangle-vulkan.c
+		glfw\tests\window.c = glfw\tests\window.c
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -24,6 +553,135 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{293066D5-96AE-4A22-B7D4-019E20662495} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
+		{9FB4E1DF-EFD6-4DAE-A0E0-6A33311A38AF} = {293066D5-96AE-4A22-B7D4-019E20662495}
+		{00C6EC11-2BAB-41B7-AC60-06081B36A375} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
+		{37CDEC2E-BA7B-49AE-80EA-15CA36E2BC0A} = {00C6EC11-2BAB-41B7-AC60-06081B36A375}
+		{9A9735CF-853C-4BD1-BCEC-729D54658EAC} = {00C6EC11-2BAB-41B7-AC60-06081B36A375}
+		{BD1D26E0-FBAB-4B13-91C0-80CACC75CDD9} = {00C6EC11-2BAB-41B7-AC60-06081B36A375}
+		{3FAE0C1D-B87D-47DE-A969-FD68D1113E57} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
+		{14432B0B-2EFE-4181-B410-B49055B357E6} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
+		{3063236E-1192-4390-9A0E-8382E04FE474} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
+		{BB9610C4-8A89-4B0F-A9E7-1B5BAAB2C4F4} = {3063236E-1192-4390-9A0E-8382E04FE474}
+		{9E41AF52-8760-4446-8A6E-78BE4F971AED} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
+		{B7478496-EEC8-4A8C-AE1D-D87872310C13} = {9E41AF52-8760-4446-8A6E-78BE4F971AED}
+		{DB36B128-F7B2-4A6C-B903-F08765903AFE} = {B7478496-EEC8-4A8C-AE1D-D87872310C13}
+		{819122AA-0CC0-46A8-8A93-CE429D6004C6} = {DB36B128-F7B2-4A6C-B903-F08765903AFE}
+		{27370F16-72F6-45B2-9E0B-481284D89449} = {819122AA-0CC0-46A8-8A93-CE429D6004C6}
+		{4C1B1397-FE09-4105-A0CD-546396DDA5C7} = {27370F16-72F6-45B2-9E0B-481284D89449}
+		{B68793D2-FDA6-46C0-87DF-E7B5B1762E60} = {4C1B1397-FE09-4105-A0CD-546396DDA5C7}
+		{269532AF-C2D4-40A0-B1E1-198E29A375EB} = {B68793D2-FDA6-46C0-87DF-E7B5B1762E60}
+		{969B5979-7A7D-4465-9C85-0C0FF34907A7} = {4C1B1397-FE09-4105-A0CD-546396DDA5C7}
+		{28262931-CC70-4CF4-80DE-A8704B59C1D9} = {DB36B128-F7B2-4A6C-B903-F08765903AFE}
+		{A1FCC1E4-6527-4361-9532-55DA6B81B2A6} = {28262931-CC70-4CF4-80DE-A8704B59C1D9}
+		{0102A396-A31B-469F-B8D8-31874B7AB8A5} = {A1FCC1E4-6527-4361-9532-55DA6B81B2A6}
+		{1DC0AA6A-43B0-4C28-AB0D-012229207773} = {0102A396-A31B-469F-B8D8-31874B7AB8A5}
+		{1B49E492-6BB1-4286-9C69-CABD70EA815E} = {28262931-CC70-4CF4-80DE-A8704B59C1D9}
+		{1A76DD2B-DB27-433D-9FC1-D3D844BDE853} = {28262931-CC70-4CF4-80DE-A8704B59C1D9}
+		{B7EE005C-FC29-4B69-B732-63708CBA4C65} = {1A76DD2B-DB27-433D-9FC1-D3D844BDE853}
+		{357CCA16-AE43-4406-83CA-F117BD7E54B1} = {B7EE005C-FC29-4B69-B732-63708CBA4C65}
+		{B6FABE52-661A-451D-BAED-4BD8041264C4} = {357CCA16-AE43-4406-83CA-F117BD7E54B1}
+		{F0122BBC-56E4-4D3F-8E47-B950747F2E9D} = {28262931-CC70-4CF4-80DE-A8704B59C1D9}
+		{7B3D881A-47CF-4743-84AE-4B0E2BF86E64} = {DB36B128-F7B2-4A6C-B903-F08765903AFE}
+		{908353EA-A3B1-4E2A-9284-44B91E4AC6D4} = {7B3D881A-47CF-4743-84AE-4B0E2BF86E64}
+		{0F2D4F4D-57D9-4D47-AC5C-81CDB9C86218} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{7E054543-C8E7-435A-833E-D60A72BD13BA} = {0F2D4F4D-57D9-4D47-AC5C-81CDB9C86218}
+		{57A39601-C3E5-4E07-BE4F-69CF4246B436} = {7E054543-C8E7-435A-833E-D60A72BD13BA}
+		{49931CDE-D178-4A3A-B560-1039EFC8082F} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{667F3820-4705-44E0-AF69-4B90FECF5EC3} = {49931CDE-D178-4A3A-B560-1039EFC8082F}
+		{C8AA91B3-1731-42FF-9B62-0F1AA0C92575} = {667F3820-4705-44E0-AF69-4B90FECF5EC3}
+		{00F613CF-C44C-4462-9F9A-0EA32B67CB90} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{F1BBAB65-65A6-48E9-A644-3988EE5B2B37} = {00F613CF-C44C-4462-9F9A-0EA32B67CB90}
+		{197D517B-8C46-4FEF-917A-18B5E8FE4F4D} = {F1BBAB65-65A6-48E9-A644-3988EE5B2B37}
+		{801AC868-86A3-4C06-8F98-021B8FA03CA1} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{05FE5947-895E-4203-A8CB-CBC40E6045EF} = {801AC868-86A3-4C06-8F98-021B8FA03CA1}
+		{CA28FEB8-C14B-40B8-A5DE-B98C5B00C86F} = {05FE5947-895E-4203-A8CB-CBC40E6045EF}
+		{03EBE84C-E42D-45A2-A7C9-6669277E9A2C} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{AD6B013F-A121-43A1-8FC6-AB5FC4620C82} = {03EBE84C-E42D-45A2-A7C9-6669277E9A2C}
+		{09955DA4-42B7-43D3-A65E-2B7AEFFDED3D} = {AD6B013F-A121-43A1-8FC6-AB5FC4620C82}
+		{01A1F32B-C6C4-4ACC-B92C-072D8D8994BC} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{64E62F5E-89F1-48F8-BBC7-2D179A1EDEB0} = {01A1F32B-C6C4-4ACC-B92C-072D8D8994BC}
+		{38AA9AC3-9D1F-49EA-A7BC-6B962D7D8234} = {64E62F5E-89F1-48F8-BBC7-2D179A1EDEB0}
+		{0390D6EC-C06E-4298-ADBD-8263E4598153} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{0D4153B7-7FF4-4A1E-BE6F-54BC9E1FDD66} = {0390D6EC-C06E-4298-ADBD-8263E4598153}
+		{8338EFFC-4F86-46AE-A8DB-B4A09645E402} = {0D4153B7-7FF4-4A1E-BE6F-54BC9E1FDD66}
+		{7D35EEDF-59D7-4BD3-A08C-A74D4B421A1F} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{AF0A5FF0-1CEB-4611-8563-E6678DA8298A} = {7D35EEDF-59D7-4BD3-A08C-A74D4B421A1F}
+		{E0980E95-A28A-4BCE-A2C9-77E5464D3860} = {AF0A5FF0-1CEB-4611-8563-E6678DA8298A}
+		{3F5010C3-1AB5-4CB4-9899-FF1E48572667} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{2EFB1C65-BEA2-4646-9DE0-D8DFBA3D626C} = {3F5010C3-1AB5-4CB4-9899-FF1E48572667}
+		{B6EE0BD5-4255-4E07-80B3-66372EF7E015} = {2EFB1C65-BEA2-4646-9DE0-D8DFBA3D626C}
+		{3EDA1A2A-64C9-4C3C-9F72-4ABFE6F223F2} = {908353EA-A3B1-4E2A-9284-44B91E4AC6D4}
+		{0F34C3B4-D09F-4FC9-879F-5D848FB8E81D} = {3EDA1A2A-64C9-4C3C-9F72-4ABFE6F223F2}
+		{FBB0ACB1-9E0F-4038-BAAE-5CA956BDC3F8} = {0F34C3B4-D09F-4FC9-879F-5D848FB8E81D}
+		{5D308385-4EEB-463D-9453-E575340466CC} = {DB36B128-F7B2-4A6C-B903-F08765903AFE}
+		{150BCB77-3DB0-4904-BD22-4398A2192DE7} = {5D308385-4EEB-463D-9453-E575340466CC}
+		{8B3F4E99-1606-4DC4-8460-57E5B44133F7} = {150BCB77-3DB0-4904-BD22-4398A2192DE7}
+		{0453851B-9E3B-430C-9984-FB5828EF2AE4} = {DB36B128-F7B2-4A6C-B903-F08765903AFE}
+		{1D9D236A-8578-4921-8BD0-130DA6E02B89} = {0453851B-9E3B-430C-9984-FB5828EF2AE4}
+		{5C3B9BA9-2F6D-40A4-A0C1-52C4C09209DD} = {DB36B128-F7B2-4A6C-B903-F08765903AFE}
+		{EB888CB1-B9E0-4A97-865D-33275B840E31} = {5C3B9BA9-2F6D-40A4-A0C1-52C4C09209DD}
+		{777C66C4-0696-4F8C-8810-957CC43DFB9C} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{A087D8C8-EC87-4675-B130-CD547909BDB2} = {777C66C4-0696-4F8C-8810-957CC43DFB9C}
+		{B76A4AC3-F1D1-448A-A6C0-BBF282848776} = {A087D8C8-EC87-4675-B130-CD547909BDB2}
+		{A280C9EA-8691-4BD6-BECE-CD39EE208894} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{0A368F20-083D-4879-82C1-B0817237B6EE} = {A280C9EA-8691-4BD6-BECE-CD39EE208894}
+		{817EDED3-B743-4EC0-8249-22C38EE7A607} = {0A368F20-083D-4879-82C1-B0817237B6EE}
+		{335F7C15-707F-43CE-94C7-14E1F1148CF3} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{A07FB3B6-B223-41C7-8E0E-585E903B226E} = {335F7C15-707F-43CE-94C7-14E1F1148CF3}
+		{3FCB045D-6B84-42A9-8F74-0FA4D4FE3A40} = {A07FB3B6-B223-41C7-8E0E-585E903B226E}
+		{220A2BC9-09FF-47F3-8309-8BE96B0E9836} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{C4360E6C-9655-4CAC-83AD-E89037F2851F} = {220A2BC9-09FF-47F3-8309-8BE96B0E9836}
+		{14FA0450-FB05-4217-99DE-0C830910351D} = {C4360E6C-9655-4CAC-83AD-E89037F2851F}
+		{25DA00DE-D29F-489A-BA64-32989A6F7D9F} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{EE3B50F6-6E9C-4F7D-B22F-5EC724B35D2F} = {25DA00DE-D29F-489A-BA64-32989A6F7D9F}
+		{3E15A7F9-704D-4487-ABDC-47F13AB9448F} = {EE3B50F6-6E9C-4F7D-B22F-5EC724B35D2F}
+		{5ACBFE25-CA5B-4B76-9C8F-2A57F3E4B516} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{0E11C664-D6FA-4725-8C33-DB4381C9FF3C} = {5ACBFE25-CA5B-4B76-9C8F-2A57F3E4B516}
+		{91E6C6D7-4785-4F48-A725-4CC9568286B5} = {0E11C664-D6FA-4725-8C33-DB4381C9FF3C}
+		{685BA432-E730-4590-8B5B-DDED37422AAF} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{8FC4331C-A253-404A-B79A-227FD86FA5E3} = {685BA432-E730-4590-8B5B-DDED37422AAF}
+		{6302DB63-6972-42FC-99C4-8EE9A8DCBE46} = {8FC4331C-A253-404A-B79A-227FD86FA5E3}
+		{D40797CC-6325-4F94-A6B4-7BF2831DCBBA} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{E315E649-8481-476A-B1F6-57100C99DAC2} = {D40797CC-6325-4F94-A6B4-7BF2831DCBBA}
+		{2C53BA38-915A-4252-88A8-281A40CDAEEB} = {E315E649-8481-476A-B1F6-57100C99DAC2}
+		{B3A3AB63-2145-40F5-8592-6FB2FA75230B} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{9B4E6FAC-47E6-4982-9862-429A301B3D2F} = {B3A3AB63-2145-40F5-8592-6FB2FA75230B}
+		{B5D59D76-2DBA-4739-84B8-B783B5594710} = {9B4E6FAC-47E6-4982-9862-429A301B3D2F}
+		{5060B03F-FB7B-4BA0-9703-27DD6992335B} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{99037E8B-15DB-44B0-BB9B-172B278778B7} = {5060B03F-FB7B-4BA0-9703-27DD6992335B}
+		{A10555F6-2D8E-4E48-A822-05DE9AAFE37B} = {99037E8B-15DB-44B0-BB9B-172B278778B7}
+		{B9A35522-4194-4087-9E7B-0F106C222384} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{5D9744EA-02F9-407D-9508-A4CAC4FBD671} = {B9A35522-4194-4087-9E7B-0F106C222384}
+		{B9CE6632-8CD7-4E1D-AEE5-B58D3C863EA0} = {5D9744EA-02F9-407D-9508-A4CAC4FBD671}
+		{1AE94A4B-FE42-4F36-94D7-A9A29B00D2CF} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{BD9542A4-3CA4-4477-9909-C928DF9B2861} = {1AE94A4B-FE42-4F36-94D7-A9A29B00D2CF}
+		{FA6B3EFC-6693-47FD-92EE-8D451090BDE4} = {BD9542A4-3CA4-4477-9909-C928DF9B2861}
+		{7943792B-D751-4C0B-B864-E017F96FB2F8} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{D468D270-7B96-47BC-B34D-3AF0E25E8684} = {7943792B-D751-4C0B-B864-E017F96FB2F8}
+		{66FA7713-4BE2-413A-9585-E1FEFEBCF55A} = {D468D270-7B96-47BC-B34D-3AF0E25E8684}
+		{20B5ACB1-C4B3-4C2B-8A19-A18499233C29} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{12414C29-F0B5-42B3-92B9-523A34991C2F} = {20B5ACB1-C4B3-4C2B-8A19-A18499233C29}
+		{93D11B17-7D91-4355-B581-9297461163EC} = {12414C29-F0B5-42B3-92B9-523A34991C2F}
+		{1D4922C1-61EC-4509-A1CB-0FAF404726EE} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{033131AD-4520-43DE-81EB-E5C997119BA9} = {1D4922C1-61EC-4509-A1CB-0FAF404726EE}
+		{8B3A6ECE-9DD3-4FA8-834D-E7E316B711E8} = {033131AD-4520-43DE-81EB-E5C997119BA9}
+		{62E912AA-0209-4614-8311-76D45AA81032} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{18E4390E-26E7-4649-9B38-4C8974D5BFCB} = {62E912AA-0209-4614-8311-76D45AA81032}
+		{2CB2BB27-7529-45A5-B956-0C48A756064D} = {18E4390E-26E7-4649-9B38-4C8974D5BFCB}
+		{636B5AA2-E27C-4A51-92BB-C9EAE76CEA49} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{19FA84AE-EA56-407D-ACBB-8CBFA977A173} = {636B5AA2-E27C-4A51-92BB-C9EAE76CEA49}
+		{92F63E8A-8AE9-4857-9F3E-17008905978D} = {19FA84AE-EA56-407D-ACBB-8CBFA977A173}
+		{7CF6DD21-63B4-40DA-9C8D-39377D0BAC4D} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{342B6F5D-9819-441E-8F3F-A6ACEFD5891F} = {7CF6DD21-63B4-40DA-9C8D-39377D0BAC4D}
+		{10B32AE6-FD56-4395-A774-96D41DF59777} = {342B6F5D-9819-441E-8F3F-A6ACEFD5891F}
+		{C93D8A77-951B-4107-A189-98F324A705AC} = {EB888CB1-B9E0-4A97-865D-33275B840E31}
+		{725FADD1-30B6-475C-89E9-CFF492E0D463} = {C93D8A77-951B-4107-A189-98F324A705AC}
+		{0879F36E-08C5-416A-8469-3477FD1CD736} = {725FADD1-30B6-475C-89E9-CFF492E0D463}
+		{6960083D-869D-4F7F-ADFD-C77E060C1061} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
+		{76C8731B-E9F5-4E01-921C-FD822080D819} = {9F88A17A-AB74-425E-9B49-917AE73BEA17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF53BD8B-AA28-4E7E-BCBF-4FB64BE6701A}
