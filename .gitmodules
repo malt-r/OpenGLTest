@@ -1,0 +1,4 @@
+[submodule "OpenGLTest/vendor/GLFW"]
+	path = OpenGLTest/vendor/GLFW
+	url = https://github.com/Malt-R0711/glfw.git
+    ignore = all

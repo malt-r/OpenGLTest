@@ -13,6 +13,12 @@ workspace "OpenGLTest"
 -- dynamic outputdir
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- include directories relative to root folder
+IncludeDir = {}
+IncludeDir["GLFW"] = "OpenGLTest/vendor/GLFW/include"
+
+include "OpenGLTest/vendor/GLFW"
+
 project "OpenGLTest"
     -- relative path
     location "OpenGLTest"
@@ -31,8 +37,17 @@ project "OpenGLTest"
         "%{prj.name}/src/**.cpp"
     }
 
-    -- should specify include dirs
-    --
+    includedirs
+    {
+        "%{IncludeDir.GLFW}"
+    }
+
+    links
+    {
+        "GLFW",
+        "opengl32.lib"
+    }
+
 
     filter "system:windows"
         cppdialect "C++17"
