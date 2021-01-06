@@ -45,7 +45,13 @@ int main(void)
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
 
     // specify buffer size and purpose
-    glBufferData(GL_ARRAY_BUFFER, positionSize * sizeof(float), positions, GL_STATIC_DRAW);
+    glBufferData
+    (
+        GL_ARRAY_BUFFER,                // type of buffer, simple vertex data in this case
+        positionSize * sizeof(float),   // size of the whole buffer in bytes
+        positions,                      // buffer data
+        GL_STATIC_DRAW                  // use pattern --> see docs.gl
+    );
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
