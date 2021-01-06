@@ -53,6 +53,20 @@ int main(void)
         GL_STATIC_DRAW                  // use pattern --> see docs.gl
     );
 
+    // specify layout of attributes (e.g. vertex position) of bound buffer
+    glVertexAttribPointer
+    (
+        0,                              // index of attribute (in the vertex itself)
+        2,                              // number of components of the attribute (three component vector --> 3)
+        GL_FLOAT,                       // datatype of the component
+        GL_FALSE,                       // normalize: should openGL normalize the value automatically?
+        sizeof(float) * 2,                              // stride: size of the whole structure in bytes
+        0                               // pointer: offset of attribute in the structure
+    );
+
+    // actually enable attribute with index 0
+    glEnableVertexAttribArray(0);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
