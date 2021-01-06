@@ -1,4 +1,7 @@
+#include "Glad/glad.h"
 #include "GLFW/glfw3.h"
+
+#include "iostream"
 
 int main(void)
 {
@@ -19,18 +22,40 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    // init glad
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+
+    const int positionSize = 6;
+    float positions[positionSize] =
+    {
+        -0.5f, -0.5f,
+         0.5f, -0.5f,
+         0.0f,  0.5f
+    };
+
+    // create memory buffer, store id in buffer
+    unsigned int buffer;
+    glGenBuffers(1, &buffer);
+
+    // 'select' buffer with specified type
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+
+    // specify buffer size and purpose
+    glBufferData(GL_ARRAY_BUFFER, positionSize * sizeof(float), positions, GL_STATIC_DRAW);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // legacy openGL code for minimal triangle
-        glBegin(GL_TRIANGLES);
-        glVertex2f(-0.5f, -0.5f);
-        glVertex2f( 0.5f, -0.5f);
-        glVertex2f( 0.0f,  0.5f);
-        glEnd();
+        // method to draw primitives without indexbuffer
+        // issues drawcall to bound buffer
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
