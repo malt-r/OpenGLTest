@@ -16,8 +16,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- include directories relative to root folder
 IncludeDir = {}
 IncludeDir["GLFW"] = "OpenGLTest/vendor/GLFW/include"
+IncludeDir["Glad"] = "OpenGLTest/vendor/Glad/include"
 
 include "OpenGLTest/vendor/GLFW"
+include "OpenGLTest/vendor/Glad"
 
 project "OpenGLTest"
     -- relative path
@@ -39,12 +41,14 @@ project "OpenGLTest"
 
     includedirs
     {
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}"
     }
 
     links
     {
         "GLFW",
+        "Glad",
         "opengl32.lib"
     }
 
