@@ -138,12 +138,20 @@ int main(void)
         return -1;
     }
 
-    const int positionSize = 6;
+    const int positionSize = 8;
     float positions[positionSize] =
     {
         -0.5f, -0.5f,
          0.5f, -0.5f,
-         0.0f,  0.5f
+         0.5f,  0.5f,
+        -0.5f,  0.5f
+    };
+
+    const int numIndices = 6;
+    unsigned int indices[numIndices] =
+    {
+        0,1,2,
+        2,3,0
     };
 
     // create memory buffer, store id in buffer
@@ -176,6 +184,22 @@ int main(void)
     // actually enable attribute with index 0
     glEnableVertexAttribArray(0);
 
+    // create index buffer (index buffer object)
+    unsigned int ibo;
+    glGenBuffers(1, &ibo);
+
+    // 'select' buffer with specified type, index buffer -> element array buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+    // specify buffer size and purpose
+    glBufferData
+    (
+        GL_ELEMENT_ARRAY_BUFFER,             // type of buffer, index buffer
+        numIndices * sizeof(unsigned int),   // size of the whole buffer in bytes
+        indices,                             // buffer data
+        GL_STATIC_DRAW                       // use pattern --> see docs.gl
+    );
+
     ShaderProgramSource source = ParseShader("res/shader/Basic.shader");
 
     // compile shaders
@@ -191,7 +215,11 @@ int main(void)
 
         // method to draw primitives without indexbuffer
         // issues drawcall to bound buffer
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        // drawcall with index buffer
+        // mode, number of indices, datatype, index buffer (bound previously, thus nullptr in this case)
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
