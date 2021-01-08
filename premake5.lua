@@ -36,7 +36,8 @@ project "OpenGLTest"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/res/shader/**.shader"
     }
 
     includedirs
@@ -63,3 +64,4 @@ project "OpenGLTest"
 
     filter "configurations:Release"
         optimize "On"
+

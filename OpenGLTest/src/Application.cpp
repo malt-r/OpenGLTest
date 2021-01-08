@@ -1,7 +1,60 @@
 #include "Glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "iostream"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+struct ShaderProgramSource
+{
+    std::string VertexSource;
+    std::string FragmentSource;
+};
+
+static ShaderProgramSource ParseShader(const std::string& fileName)
+{
+    std::ifstream stream(fileName);
+    if (!stream)
+    {
+        std::cout << "could not open " << fileName << std::endl;
+    }
+
+    enum class ShaderType
+    {
+        NONE = -1, VERTEX = 0, FRAGMENT = 1
+    };
+
+    std::string line;
+    std::stringstream ss[2];
+    ShaderType mode = ShaderType::NONE;
+
+    while (getline(stream, line))
+    {
+        // read lines
+        if (line.find("#shader") != std::string::npos)
+        {
+            // select mode 
+            if (line.find("vertex") != std::string::npos)
+            {
+                mode = ShaderType::VERTEX;
+            }
+            else if (line.find("fragment") != std::string::npos)
+            {
+                mode = ShaderType::FRAGMENT;
+            }
+        }
+        else
+        {
+            // dump line in specified string stream
+            if (mode != ShaderType::NONE)
+            {
+                ss[(int)mode] << line << "\n";
+            }
+        }
+    }
+    return { ss[0].str(), ss[1].str() };
+}
 
 static unsigned int CompileShader(unsigned int type, const std::string& source)
 {
@@ -39,7 +92,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
     // compile vertex and fragment shader
     unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-    unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, vertexShader);
+    unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
     // attach compiled shader-objects to program
     glAttachShader(program, vs);
@@ -55,7 +108,6 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
     // save to delete the intermediate structures (shaders), because they were linked to a complete program
     glDeleteShader(vs);
     glDeleteShader(fs);
-
 
     return program;
 }
@@ -124,6 +176,13 @@ int main(void)
     // actually enable attribute with index 0
     glEnableVertexAttribArray(0);
 
+    ShaderProgramSource source = ParseShader("res/shader/Basic.shader");
+
+    // compile shaders
+    unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
+
+    glUseProgram(shader);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
@@ -140,6 +199,8 @@ int main(void)
         /* Poll for and process events */
         glfwPollEvents();
     }
+
+    glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;
