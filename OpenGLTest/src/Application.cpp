@@ -84,27 +84,27 @@ static ShaderProgramSource ParseShader(const std::string& fileName)
 static unsigned int CompileShader(unsigned int type, const std::string& source)
 {
     // create empty shader object
-    unsigned int id = glCreateShader(type);
+    GLCall(unsigned int id = glCreateShader(type));
     const char* src = source.c_str();
     // set sourcecode of shader with id
-    glShaderSource(id, 1, &src, nullptr);
+    GLCall(glShaderSource(id, 1, &src, nullptr));
     // compile shader
-    glCompileShader(id);
+    GLCall(glCompileShader(id));
 
     // handle error
     int result;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+    GLCall(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
     if (result == GL_FALSE)
     {
         int length;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+        GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
 
         // sneaky way of dynamically allocate array on the stack
         char* message = (char*)alloca(length * sizeof(char));
-        glGetShaderInfoLog(id, length, &length, message);
+        GLCall(glGetShaderInfoLog(id, length, &length, message));
         std::cout << "Failed to compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader" << std::endl;
         std::cout << message << std::endl;
-        glDeleteShader(id);
+        GLCall(glDeleteShader(id));
         return 0;
     }
 
@@ -113,26 +113,26 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
 
 static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
-    unsigned int program = glCreateProgram();
+    GLCall(unsigned int program = glCreateProgram());
 
     // compile vertex and fragment shader
     unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
     unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
     // attach compiled shader-objects to program
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
+    GLCall(glAttachShader(program, vs));
+    GLCall(glAttachShader(program, fs));
 
     // link all parts of the program
-    glLinkProgram(program);
+    GLCall(glLinkProgram(program));
 
     // performs validation on the program and stores the result in the 'program's information log'
     // status can be queried by calling glGetProgram with arguments program and GL_VALIDATE_STATUS
-    glValidateProgram(program);
+    GLCall(glValidateProgram(program));
 
     // save to delete the intermediate structures (shaders), because they were linked to a complete program
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    GLCall(glDeleteShader(vs));
+    GLCall(glDeleteShader(fs));
 
     return program;
 }
@@ -181,22 +181,22 @@ int main(void)
 
     // create memory buffer, store id in buffer
     unsigned int buffer;
-    glGenBuffers(1, &buffer);
+    GLCall(glGenBuffers(1, &buffer));
 
     // 'select' buffer with specified type
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
 
     // specify buffer size and purpose
-    glBufferData
+    GLCall(glBufferData
     (
         GL_ARRAY_BUFFER,                // type of buffer, simple vertex data in this case
         positionSize * sizeof(float),   // size of the whole buffer in bytes
         positions,                      // buffer data
         GL_STATIC_DRAW                  // use pattern --> see docs.gl
-    );
+    ));
 
     // specify layout of attributes (e.g. vertex position) of bound buffer
-    glVertexAttribPointer
+    GLCall(glVertexAttribPointer
     (
         0,                              // index of attribute (in the vertex itself)
         2,                              // number of components of the attribute (three component vector --> 3)
@@ -204,39 +204,39 @@ int main(void)
         GL_FALSE,                       // normalize: should openGL normalize the value automatically?
         sizeof(float) * 2,                              // stride: size of the whole structure in bytes
         0                               // pointer: offset of attribute in the structure
-    );
+    ));
 
     // actually enable attribute with index 0
-    glEnableVertexAttribArray(0);
+    GLCall(glEnableVertexAttribArray(0));
 
     // create index buffer (index buffer object)
     unsigned int ibo;
-    glGenBuffers(1, &ibo);
+    GLCall(glGenBuffers(1, &ibo));
 
     // 'select' buffer with specified type, index buffer -> element array buffer
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
 
     // specify buffer size and purpose
-    glBufferData
+    GLCall(glBufferData
     (
         GL_ELEMENT_ARRAY_BUFFER,             // type of buffer, index buffer
         numIndices * sizeof(unsigned int),   // size of the whole buffer in bytes
         indices,                             // buffer data
         GL_STATIC_DRAW                       // use pattern --> see docs.gl
-    );
+    ));
 
     ShaderProgramSource source = ParseShader("res/shader/Basic.shader");
 
     // compile shaders
     unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
 
-    glUseProgram(shader);
+    GLCall(glUseProgram(shader));
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+        GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
         // method to draw primitives without indexbuffer
         // issues drawcall to bound buffer
@@ -254,7 +254,7 @@ int main(void)
         glfwPollEvents();
     }
 
-    glDeleteProgram(shader);
+    GLCall(glDeleteProgram(shader));
 
     glfwTerminate();
     return 0;
