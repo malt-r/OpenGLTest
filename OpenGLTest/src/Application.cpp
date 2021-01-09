@@ -1,35 +1,18 @@
 #include "Glad/glad.h"
 #include "GLFW/glfw3.h"
 
+#include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <math.h>
 
+
 // TODO: try modifying the vertex positions with sin or cos timebased?
-
-#define ASSERT(x) if(!(x)) __debugbreak(); // compiler intrinsic
-#define GLCall(x) GLClearError();\
-    x;\
-    ASSERT(GLLogCall(#x, __FILE__, __LINE__))
-
-static bool GLLogCall(const char* function, const char* file, int line)
-{
-    while (GLenum error = glGetError())
-    {
-        std::cout << "[OpenGL error]: (" << error << ")" << 
-            file << ": " << function << " (line " << line << ")" << std::endl;
-        return false;
-    }
-    return true;
-}
-
-static void GLClearError()
-{
-    // loop until no more errors
-    while (glGetError());
-}
 
 struct ShaderProgramSource
 {
@@ -171,152 +154,125 @@ int main(void)
         return -1;
     }
 
-    const int positionSize = 8;
-    float positions[positionSize] =
     {
-        -0.5f, -0.5f,
-         0.5f, -0.5f,
-         0.5f,  0.5f,
-        -0.5f,  0.5f
-    };
+        const int positionSize = 8;
+        float positions[positionSize] =
+        {
+            -0.5f, -0.5f,
+             0.5f, -0.5f,
+             0.5f,  0.5f,
+            -0.5f,  0.5f
+        };
 
-    const int numIndices = 6;
-    unsigned int indices[numIndices] =
-    {
-        0,1,2,
-        2,3,0
-    };
+        const int numIndices = 6;
+        unsigned int indices[numIndices] =
+        {
+            0,1,2,
+            2,3,0
+        };
 
-    // create and bind vertex array
-    unsigned int vao; // vertex array object --> binds attribute and vertex array together
-    GLCall(glGenVertexArrays(1, &vao));
-    GLCall(glBindVertexArray(vao));
-
-    // create memory buffer, store id in buffer
-    unsigned int buffer;
-    GLCall(glGenBuffers(1, &buffer));
-
-    // 'select' buffer with specified type
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-
-    // specify buffer size and purpose
-    GLCall(glBufferData
-    (
-        GL_ARRAY_BUFFER,                // type of buffer, simple vertex data in this case
-        positionSize * sizeof(float),   // size of the whole buffer in bytes
-        positions,                      // buffer data
-        GL_STATIC_DRAW                  // use pattern --> see docs.gl
-    ));
-
-    // actually enable attribute with index 0
-    GLCall(glEnableVertexAttribArray(0));
-
-    // specify layout of attributes (e.g. vertex position) of bound buffer
-    // does not actualy store the layout to any specific buffer
-    // links the index 0 of the currently bound vertex Array (vao) to the currently bound GL_ARRAY_BUFFER
-    // --> different vertex buffers (GL_ARRAY_BUFFER) for different indices in one vao are possible
-    GLCall(glVertexAttribPointer
-    (
-        0,                              // index of attribute (in the vertex itself)
-        2,                              // number of components of the attribute (three component vector --> 3)
-        GL_FLOAT,                       // datatype of the component
-        GL_FALSE,                       // normalize: should openGL normalize the value automatically?
-        sizeof(float) * 2,                              // stride: size of the whole structure in bytes
-        0                               // pointer: offset of attribute in the structure
-    ));
-
-
-    // create index buffer (index buffer object)
-    unsigned int ibo;
-    GLCall(glGenBuffers(1, &ibo));
-
-    // 'select' buffer with specified type, index buffer -> element array buffer
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-
-    // specify buffer size and purpose
-    GLCall(glBufferData
-    (
-        GL_ELEMENT_ARRAY_BUFFER,             // type of buffer, index buffer
-        numIndices * sizeof(unsigned int),   // size of the whole buffer in bytes
-        indices,                             // buffer data
-        GL_STATIC_DRAW                       // use pattern --> see docs.gl
-    ));
-
-    ShaderProgramSource source = ParseShader("res/shader/Basic.shader");
-
-    // compile shaders
-    unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
-
-    // bind program
-    GLCall(glUseProgram(shader));
-
-    // set up uniform before draw call (uniforms are used per drawcall
-    GLCall(int location = glGetUniformLocation(shader, "u_Color"));
-    // location might be -1 because the uniform is specified in shader but unused --> then openGL will strip it from code
-    ASSERT(location != -1);
-    // set value of uniform
-    GLCall(glUniform4f(location, 0.5f, 0.0f, 0.0f, 1.0f));
-
-    GLCall(int offsetLocation = glGetUniformLocation(shader, "u_Offset"));
-    ASSERT(offsetLocation != -1);
-    GLCall(glUniform2f(offsetLocation, 0.0f, 0.0f));
-
-    float r = 0.0f;
-    float increment = 0.05f;
-
-    // unbind everything
-    GLCall(glUseProgram(0));
-    GLCall(glBindVertexArray(0));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
-        // typical procedure before draw call
-        GLCall(glUseProgram(shader));
-        GLCall(glUniform4f(location, r, 0.0f, 0.5f, 1.0f)); // used per drawcall
-
-        // this binding between vertex-buffer and vertex-layout is stored in an vertex array object
-        // if these are used correctly, the layout won't be needed to be specified every time
-        // if using the core profile of OpenGL, these objects are mandatory to use
-        //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-        //GLCall(glEnableVertexAttribArray(0));
-        //GLCall(glVertexAttribPointer ( 0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0 ));
-
+        // create and bind vertex array
+        unsigned int vao; // vertex array object --> binds attribute and vertex array together
+        GLCall(glGenVertexArrays(1, &vao));
         GLCall(glBindVertexArray(vao));
-        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
+        VertexBuffer vb(positions, positionSize * sizeof(float));
+
+        // actually enable attribute with index 0
+        GLCall(glEnableVertexAttribArray(0));
+
+        // specify layout of attributes (e.g. vertex position) of bound buffer
+        // does not actualy store the layout to any specific buffer
+        // links the index 0 of the currently bound vertex Array (vao) to the currently bound GL_ARRAY_BUFFER
+        // --> different vertex buffers (GL_ARRAY_BUFFER) for different indices in one vao are possible
+        GLCall(glVertexAttribPointer
+        (
+            0,                              // index of attribute (in the vertex itself)
+            2,                              // number of components of the attribute (three component vector --> 3)
+            GL_FLOAT,                       // datatype of the component
+            GL_FALSE,                       // normalize: should openGL normalize the value automatically?
+            sizeof(float) * 2,                              // stride: size of the whole structure in bytes
+            0                               // pointer: offset of attribute in the structure
+        ));
 
 
-        // drawcall with index buffer
-        // mode, number of indices, datatype, index buffer (bound previously, thus nullptr in this case)
-        // datatype must be unsigned
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+        // create index buffer (index buffer object)
+        IndexBuffer ib(indices, numIndices);
 
-        // animate color
-        if (r > 1.0f)
+        ShaderProgramSource source = ParseShader("res/shader/Basic.shader");
+
+        // compile shaders
+        unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
+
+        // bind program
+        GLCall(glUseProgram(shader));
+
+        // set up uniform before draw call (uniforms are used per drawcall
+        GLCall(int location = glGetUniformLocation(shader, "u_Color"));
+        // location might be -1 because the uniform is specified in shader but unused --> then openGL will strip it from code
+        ASSERT(location != -1);
+        // set value of uniform
+        GLCall(glUniform4f(location, 0.5f, 0.0f, 0.0f, 1.0f));
+
+        float r = 0.0f;
+        float increment = 0.05f;
+
+        // unbind everything
+        GLCall(glUseProgram(0));
+        GLCall(glBindVertexArray(0));
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+
+        /* Loop until the user closes the window */
+        while (!glfwWindowShouldClose(window))
         {
-            increment = -0.05f;
+            /* Render here */
+            GLCall(glClear(GL_COLOR_BUFFER_BIT));
+
+            // typical procedure before draw call
+            GLCall(glUseProgram(shader));
+            GLCall(glUniform4f(location, r, 0.0f, 0.5f, 1.0f)); // used per drawcall
+
+            // this binding between vertex-buffer and vertex-layout is stored in an vertex array object
+            // if these are used correctly, the layout won't be needed to be specified every time
+            // if using the core profile of OpenGL, these objects are mandatory to use
+            //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+            //GLCall(glEnableVertexAttribArray(0));
+            //GLCall(glVertexAttribPointer ( 0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0 ));
+
+            GLCall(glBindVertexArray(vao));
+            ib.Bind();
+
+            // drawcall with index buffer
+            // mode, number of indices, datatype, index buffer (bound previously, thus nullptr in this case)
+            // datatype must be unsigned
+            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+
+            // animate color
+            if (r > 1.0f)
+            {
+                increment = -0.05f;
+            }
+            else if (r < 0.0f)
+            {
+                increment = 0.05f;
+            }
+
+            r += increment;
+
+            /* Swap front and back buffers */
+            glfwSwapBuffers(window);
+
+            /* Poll for and process events */
+            glfwPollEvents();
         }
-        else if (r < 0.0f)
-        {
-            increment = 0.05f;
-        }
 
-        r += increment;
+        GLCall(glDeleteProgram(shader));
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
-
-        /* Poll for and process events */
-        glfwPollEvents();
     }
-
-    GLCall(glDeleteProgram(shader));
-
+    // glfwTerminate destroys the openGL-context
     glfwTerminate();
+    // because there is no valid openGL context here, when trying to deallocate the stack allocated vertex and index buffer
+    // there will be an openGL error code, which will lead to infinite loop in clear error...
     return 0;
 }

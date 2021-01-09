@@ -43,7 +43,8 @@ project "OpenGLTest"
     includedirs
     {
         "%{IncludeDir.GLFW}",
-        "%{IncludeDir.Glad}"
+        "%{IncludeDir.Glad}",
+        "src"
     }
 
     links
