@@ -156,6 +156,9 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    // sync swap interval with vsync?
+    glfwSwapInterval(1);
+
     // init glad
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -230,8 +233,18 @@ int main(void)
     // compile shaders
     unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
 
+    // bind program
     GLCall(glUseProgram(shader));
 
+    // set up uniform before draw call (uniforms are used per drawcall
+    GLCall(int location = glGetUniformLocation(shader, "u_Color"));
+    // location might be -1 because the uniform is specified in shader but unused --> then openGL will strip it from code
+    ASSERT(location != -1);
+    // set value of uniform
+    GLCall(glUniform4f(location, 0.5f, 0.0f, 0.0f, 1.0f));
+
+    float r = 0.0f;
+    float increment = 0.05f;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
@@ -242,10 +255,23 @@ int main(void)
         // issues drawcall to bound buffer
         // glDrawArrays(GL_TRIANGLES, 0, 3);
 
+        GLCall(glUniform4f(location, r, 0.0f, 0.5f, 1.0f));
         // drawcall with index buffer
         // mode, number of indices, datatype, index buffer (bound previously, thus nullptr in this case)
         // datatype must be unsigned
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+
+        // animate color
+        if (r > 1.0f)
+        {
+            increment = -0.05f;
+        }
+        else if (r < 0.0f)
+        {
+            increment = 0.05f;
+        }
+
+        r += increment;
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
