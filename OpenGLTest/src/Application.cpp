@@ -145,6 +145,11 @@ int main(void)
     if (!glfwInit())
         return -1;
 
+    // tell glfw to use the OpenGL core profile of version 330
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window)
@@ -182,6 +187,11 @@ int main(void)
         2,3,0
     };
 
+    // create and bind vertex array
+    unsigned int vao; // vertex array object --> binds attribute and vertex array together
+    GLCall(glGenVertexArrays(1, &vao));
+    GLCall(glBindVertexArray(vao));
+
     // create memory buffer, store id in buffer
     unsigned int buffer;
     GLCall(glGenBuffers(1, &buffer));
@@ -198,7 +208,13 @@ int main(void)
         GL_STATIC_DRAW                  // use pattern --> see docs.gl
     ));
 
+    // actually enable attribute with index 0
+    GLCall(glEnableVertexAttribArray(0));
+
     // specify layout of attributes (e.g. vertex position) of bound buffer
+    // does not actualy store the layout to any specific buffer
+    // links the index 0 of the currently bound vertex Array (vao) to the currently bound GL_ARRAY_BUFFER
+    // --> different vertex buffers (GL_ARRAY_BUFFER) for different indices in one vao are possible
     GLCall(glVertexAttribPointer
     (
         0,                              // index of attribute (in the vertex itself)
@@ -209,8 +225,6 @@ int main(void)
         0                               // pointer: offset of attribute in the structure
     ));
 
-    // actually enable attribute with index 0
-    GLCall(glEnableVertexAttribArray(0));
 
     // create index buffer (index buffer object)
     unsigned int ibo;
@@ -243,19 +257,40 @@ int main(void)
     // set value of uniform
     GLCall(glUniform4f(location, 0.5f, 0.0f, 0.0f, 1.0f));
 
+    GLCall(int offsetLocation = glGetUniformLocation(shader, "u_Offset"));
+    ASSERT(offsetLocation != -1);
+    GLCall(glUniform2f(offsetLocation, 0.0f, 0.0f));
+
     float r = 0.0f;
     float increment = 0.05f;
+
+    // unbind everything
+    GLCall(glUseProgram(0));
+    GLCall(glBindVertexArray(0));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-        // method to draw primitives without indexbuffer
-        // issues drawcall to bound buffer
-        // glDrawArrays(GL_TRIANGLES, 0, 3);
+        // typical procedure before draw call
+        GLCall(glUseProgram(shader));
+        GLCall(glUniform4f(location, r, 0.0f, 0.5f, 1.0f)); // used per drawcall
 
-        GLCall(glUniform4f(location, r, 0.0f, 0.5f, 1.0f));
+        // this binding between vertex-buffer and vertex-layout is stored in an vertex array object
+        // if these are used correctly, the layout won't be needed to be specified every time
+        // if using the core profile of OpenGL, these objects are mandatory to use
+        //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+        //GLCall(glEnableVertexAttribArray(0));
+        //GLCall(glVertexAttribPointer ( 0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0 ));
+
+        GLCall(glBindVertexArray(vao));
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
+
         // drawcall with index buffer
         // mode, number of indices, datatype, index buffer (bound previously, thus nullptr in this case)
         // datatype must be unsigned
