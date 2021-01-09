@@ -5,6 +5,31 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <math.h>
+
+// TODO: try modifying the vertex positions with sin or cos timebased?
+
+#define ASSERT(x) if(!(x)) __debugbreak(); // compiler intrinsic
+#define GLCall(x) GLClearError();\
+    x;\
+    ASSERT(GLLogCall(#x, __FILE__, __LINE__))
+
+static bool GLLogCall(const char* function, const char* file, int line)
+{
+    while (GLenum error = glGetError())
+    {
+        std::cout << "[OpenGL error]: (" << error << ")" << 
+            file << ": " << function << " (line " << line << ")" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+static void GLClearError()
+{
+    // loop until no more errors
+    while (glGetError());
+}
 
 struct ShaderProgramSource
 {
@@ -219,7 +244,8 @@ int main(void)
 
         // drawcall with index buffer
         // mode, number of indices, datatype, index buffer (bound previously, thus nullptr in this case)
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        // datatype must be unsigned
+        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
