@@ -18,7 +18,13 @@
     <ClInclude Include="src\Renderer.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\VertexArray.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\VertexBuffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VertexBufferLayout.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
@@ -30,6 +36,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexArray.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\VertexBuffer.cpp">

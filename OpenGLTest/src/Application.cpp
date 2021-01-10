@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexArray.h"
 
 #include <iostream>
 #include <fstream>
@@ -171,30 +172,17 @@ int main(void)
             2,3,0
         };
 
-        // create and bind vertex array
-        unsigned int vao; // vertex array object --> binds attribute and vertex array together
-        GLCall(glGenVertexArrays(1, &vao));
-        GLCall(glBindVertexArray(vao));
+        VertexArray va;
 
+        // holds vertex-data
         VertexBuffer vb(positions, positionSize * sizeof(float));
 
-        // actually enable attribute with index 0
-        GLCall(glEnableVertexAttribArray(0));
+        VertexBufferLayout layout;
+        // creates a new vertex-attribute of two float-components
+        layout.Push<float>(2);
 
-        // specify layout of attributes (e.g. vertex position) of bound buffer
-        // does not actualy store the layout to any specific buffer
-        // links the index 0 of the currently bound vertex Array (vao) to the currently bound GL_ARRAY_BUFFER
-        // --> different vertex buffers (GL_ARRAY_BUFFER) for different indices in one vao are possible
-        GLCall(glVertexAttribPointer
-        (
-            0,                              // index of attribute (in the vertex itself)
-            2,                              // number of components of the attribute (three component vector --> 3)
-            GL_FLOAT,                       // datatype of the component
-            GL_FALSE,                       // normalize: should openGL normalize the value automatically?
-            sizeof(float) * 2,                              // stride: size of the whole structure in bytes
-            0                               // pointer: offset of attribute in the structure
-        ));
-
+        // adds vertex buffer with layout to vertex array
+        va.AddBuffer(vb, layout);
 
         // create index buffer (index buffer object)
         IndexBuffer ib(indices, numIndices);
@@ -240,7 +228,7 @@ int main(void)
             //GLCall(glEnableVertexAttribArray(0));
             //GLCall(glVertexAttribPointer ( 0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0 ));
 
-            GLCall(glBindVertexArray(vao));
+            va.Bind();
             ib.Bind();
 
             // drawcall with index buffer
