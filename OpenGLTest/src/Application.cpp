@@ -1,125 +1,16 @@
-#include "Glad/glad.h"
+#include "Renderer.h"
 #include "GLFW/glfw3.h"
 
-#include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
+#include "Shader.h"
 
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <math.h>
 
+#define ANIMATE 0
 
 // TODO: try modifying the vertex positions with sin or cos timebased?
-
-struct ShaderProgramSource
-{
-    std::string VertexSource;
-    std::string FragmentSource;
-};
-
-static ShaderProgramSource ParseShader(const std::string& fileName)
-{
-    std::ifstream stream(fileName);
-    if (!stream)
-    {
-        std::cout << "could not open " << fileName << std::endl;
-    }
-
-    enum class ShaderType
-    {
-        NONE = -1, VERTEX = 0, FRAGMENT = 1
-    };
-
-    std::string line;
-    std::stringstream ss[2];
-    ShaderType mode = ShaderType::NONE;
-
-    while (getline(stream, line))
-    {
-        // read lines
-        if (line.find("#shader") != std::string::npos)
-        {
-            // select mode 
-            if (line.find("vertex") != std::string::npos)
-            {
-                mode = ShaderType::VERTEX;
-            }
-            else if (line.find("fragment") != std::string::npos)
-            {
-                mode = ShaderType::FRAGMENT;
-            }
-        }
-        else
-        {
-            // dump line in specified string stream
-            if (mode != ShaderType::NONE)
-            {
-                ss[(int)mode] << line << "\n";
-            }
-        }
-    }
-    return { ss[0].str(), ss[1].str() };
-}
-
-static unsigned int CompileShader(unsigned int type, const std::string& source)
-{
-    // create empty shader object
-    GLCall(unsigned int id = glCreateShader(type));
-    const char* src = source.c_str();
-    // set sourcecode of shader with id
-    GLCall(glShaderSource(id, 1, &src, nullptr));
-    // compile shader
-    GLCall(glCompileShader(id));
-
-    // handle error
-    int result;
-    GLCall(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
-    if (result == GL_FALSE)
-    {
-        int length;
-        GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
-
-        // sneaky way of dynamically allocate array on the stack
-        char* message = (char*)alloca(length * sizeof(char));
-        GLCall(glGetShaderInfoLog(id, length, &length, message));
-        std::cout << "Failed to compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader" << std::endl;
-        std::cout << message << std::endl;
-        GLCall(glDeleteShader(id));
-        return 0;
-    }
-
-    return id;
-}
-
-static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
-{
-    GLCall(unsigned int program = glCreateProgram());
-
-    // compile vertex and fragment shader
-    unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-    unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-    // attach compiled shader-objects to program
-    GLCall(glAttachShader(program, vs));
-    GLCall(glAttachShader(program, fs));
-
-    // link all parts of the program
-    GLCall(glLinkProgram(program));
-
-    // performs validation on the program and stores the result in the 'program's information log'
-    // status can be queried by calling glGetProgram with arguments program and GL_VALIDATE_STATUS
-    GLCall(glValidateProgram(program));
-
-    // save to delete the intermediate structures (shaders), because they were linked to a complete program
-    GLCall(glDeleteShader(vs));
-    GLCall(glDeleteShader(fs));
-
-    return program;
-}
 
 int main(void)
 {
@@ -135,7 +26,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(2*640, 2*480, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -165,6 +56,8 @@ int main(void)
             -0.5f,  0.5f
         };
 
+        float animatedPositions[positionSize] = { 0 };
+
         const int numIndices = 6;
         unsigned int indices[numIndices] =
         {
@@ -186,47 +79,44 @@ int main(void)
 
         // create index buffer (index buffer object)
         IndexBuffer ib(indices, numIndices);
-
-        ShaderProgramSource source = ParseShader("res/shader/Basic.shader");
-
-        // compile shaders
-        unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
-
-        // bind program
-        GLCall(glUseProgram(shader));
-
-        // set up uniform before draw call (uniforms are used per drawcall
-        GLCall(int location = glGetUniformLocation(shader, "u_Color"));
-        // location might be -1 because the uniform is specified in shader but unused --> then openGL will strip it from code
-        ASSERT(location != -1);
-        // set value of uniform
-        GLCall(glUniform4f(location, 0.5f, 0.0f, 0.0f, 1.0f));
+        Shader shader("res/shader/Basic.shader");
+        shader.Bind();
+        shader.SetUniform4f("u_Color", 0.5f, 0.0f, 0.0f, 1.0f);
 
         float r = 0.0f;
-        float increment = 0.05f;
+        float rIncrement = 0.05f;
+
+        float o = 0.0f;
+        float oIncrement = 0.008f;
 
         // unbind everything
         va.Unbind();
-        GLCall(glUseProgram(0));
+        shader.Unbind();
         vb.Unbind();
         ib.Unbind();
+
+        float sign = 1.f;
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
+            //update animatedPositions
+#if ANIMATE == 1
+            for (int i = 0; i < positionSize; i++)
+            {
+                if (i % 2 == 0)
+                   sign = -sign;
+                animatedPositions[i] = positions[i] + sign * o;
+            }
+            vb.Update(animatedPositions, positionSize * sizeof(float));
+#endif
+
             /* Render here */
             GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
             // typical procedure before draw call
-            GLCall(glUseProgram(shader));
-            GLCall(glUniform4f(location, r, 0.0f, 0.5f, 1.0f)); // used per drawcall
-
-            // this binding between vertex-buffer and vertex-layout is stored in an vertex array object
-            // if these are used correctly, the layout won't be needed to be specified every time
-            // if using the core profile of OpenGL, these objects are mandatory to use
-            //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-            //GLCall(glEnableVertexAttribArray(0));
-            //GLCall(glVertexAttribPointer ( 0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0 ));
+            shader.Bind();
+            shader.SetUniform4f("u_Color", r, 0.0f, 0.5f, 1.0f);
 
             va.Bind();
             ib.Bind();
@@ -239,14 +129,24 @@ int main(void)
             // animate color
             if (r > 1.0f)
             {
-                increment = -0.05f;
+                rIncrement = -0.05f;
             }
             else if (r < 0.0f)
             {
-                increment = 0.05f;
+                rIncrement = 0.05f;
             }
 
-            r += increment;
+            r += rIncrement;
+
+            if (o > 0.4f || o < -0.4f )
+            {
+                oIncrement = -oIncrement;
+            }
+
+            o += oIncrement;
+
+
+
 
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
@@ -254,9 +154,6 @@ int main(void)
             /* Poll for and process events */
             glfwPollEvents();
         }
-
-        GLCall(glDeleteProgram(shader));
-
     }
     // glfwTerminate destroys the openGL-context
     glfwTerminate();
