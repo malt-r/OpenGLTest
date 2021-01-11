@@ -2,6 +2,7 @@
 #include "GLFW/glfw3.h"
 
 #include "Renderer.h"
+#include "Texture.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
@@ -49,16 +50,27 @@ int main(void)
     }
 
     {
-        const int positionSize = 8;
-        float positions[positionSize] =
+        const int vertecesSize = 8 * 2;
+        // first vec2: x,y; second vec2: texture coordinates:
+        // openGL texcoods:
+        //
+        // 1|
+        //  |
+        //  |
+        //  |
+        //  |
+        // 0+-------------+
+        //  0             1
+
+        float verteces[vertecesSize] =
         {
-            -0.5f, -0.5f,
-             0.5f, -0.5f,
-             0.5f,  0.5f,
-            -0.5f,  0.5f
+            -0.5f, -0.5f, 0.0f, 0.0f,
+             0.5f, -0.5f, 1.0f, 0.0f,
+             0.5f,  0.5f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 1.0f
         };
 
-        float animatedPositions[positionSize] = { 0 };
+        float animatedPositions[vertecesSize] = { 0 };
 
         const int numIndices = 6;
         unsigned int indices[numIndices] =
@@ -70,11 +82,14 @@ int main(void)
         VertexArray va;
 
         // holds vertex-data
-        VertexBuffer vb(positions, positionSize * sizeof(float));
+        VertexBuffer vb(verteces, vertecesSize * sizeof(float));
 
         VertexBufferLayout layout;
         // creates a new vertex-attribute of two float-components
         layout.Push<float>(2);
+        // texcoords
+        layout.Push<float>(2);
+
 
         // adds vertex buffer with layout to vertex array
         va.AddBuffer(vb, layout);
@@ -90,6 +105,12 @@ int main(void)
 
         float o = 0.0f;
         float oIncrement = 0.008f;
+
+        // currently no blending supported...
+        Texture texture("res/textures/help.png");
+        texture.Bind(0);
+        // texture was bound to slot 0, so set corresponding uniform to 0
+        shader.SetUniform1i("u_Texture", 0);
 
         // unbind everything
         va.Unbind();
@@ -141,9 +162,6 @@ int main(void)
             }
 
             o += oIncrement;
-
-
-
 
             /* Swap front and back buffers */
             glfwSwapBuffers(window);

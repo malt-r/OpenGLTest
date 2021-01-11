@@ -17,6 +17,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "OpenGLTest/vendor/GLFW/include"
 IncludeDir["Glad"] = "OpenGLTest/vendor/Glad/include"
+IncludeDir["stb_image"] = "OpenGLTest/vendor/stb_image/"
 
 include "OpenGLTest/vendor/GLFW"
 include "OpenGLTest/vendor/Glad"
@@ -37,13 +38,17 @@ project "OpenGLTest"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
-        "%{prj.name}/res/shader/**.shader"
+        "%{prj.name}/res/shader/**.shader",
+        "%{prj.name}/vendor/stb_image/**.h",
+        "%{prj.name}/vendor/stb_image/**.cpp",
+        "%{prj.name}/res/textures/**.png"
     }
 
     includedirs
     {
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
+        "%{IncludeDir.stb_image}",
         "src"
     }
 
