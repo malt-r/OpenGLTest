@@ -1,7 +1,9 @@
 #include "Renderer.h"
 #include "GLFW/glfw3.h"
 
+#include "Renderer.h"
 #include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
@@ -97,6 +99,8 @@ int main(void)
 
         float sign = 1.f;
 
+        Renderer renderer;
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
@@ -112,19 +116,12 @@ int main(void)
 #endif
 
             /* Render here */
-            GLCall(glClear(GL_COLOR_BUFFER_BIT));
+            renderer.Clear();
 
             // typical procedure before draw call
-            shader.Bind();
             shader.SetUniform4f("u_Color", r, 0.0f, 0.5f, 1.0f);
 
-            va.Bind();
-            ib.Bind();
-
-            // drawcall with index buffer
-            // mode, number of indices, datatype, index buffer (bound previously, thus nullptr in this case)
-            // datatype must be unsigned
-            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+            renderer.Draw(va, ib, shader);
 
             // animate color
             if (r > 1.0f)
