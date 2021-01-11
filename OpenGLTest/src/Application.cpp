@@ -79,6 +79,10 @@ int main(void)
             2,3,0
         };
 
+        // setup alpha blending
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
         VertexArray va;
 
         // holds vertex-data
@@ -107,7 +111,7 @@ int main(void)
         float oIncrement = 0.008f;
 
         // currently no blending supported...
-        Texture texture("res/textures/help.png");
+        Texture texture("res/textures/git.png");
         texture.Bind(0);
         // texture was bound to slot 0, so set corresponding uniform to 0
         shader.SetUniform1i("u_Texture", 0);
