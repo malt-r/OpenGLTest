@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "Renderer.h"
+#include "glm/glm.hpp"
 
 struct ShaderProgramSource
 {
@@ -32,5 +33,6 @@ public:
 
     void SetUniform1i(const std::string& name, int i);
     void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v4);
+    void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
     int GetUniformLocation(const std::string& name);
 };

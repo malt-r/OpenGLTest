@@ -137,6 +137,12 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2,
     GLCall(glUniform4f(location, v0, v1, v2, v4));
 }
 
+void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
+{
+    // GL_FALSE for transpose --> row major or column major --> see docs.gl
+    GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+}
+
 int Shader::GetUniformLocation(const std::string& name)
 {
     if (m_uniformLocationCache.find(name) != m_uniformLocationCache.end())

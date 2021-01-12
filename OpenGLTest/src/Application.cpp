@@ -8,6 +8,8 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include <iostream>
 
@@ -100,9 +102,17 @@ int main(void)
 
         // create index buffer (index buffer object)
         IndexBuffer ib(indices, numIndices);
+
+        // create ortho matrix with 4:3 aspect ratio (like our window)
+        // orthographic projection: objects further away won't get smaller
+        // TODO: research projection matrix
+        // the matrix itself defines the bounbaries for the projection
+        glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
         shader.SetUniform4f("u_Color", 0.5f, 0.0f, 0.0f, 1.0f);
+        shader.SetUniformMat4f("u_MVP", proj);
 
         float r = 0.0f;
         float rIncrement = 0.05f;
