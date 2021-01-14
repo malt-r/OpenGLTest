@@ -19,6 +19,7 @@ IncludeDir["GLFW"] = "OpenGLTest/vendor/GLFW/include"
 IncludeDir["Glad"] = "OpenGLTest/vendor/Glad/include"
 IncludeDir["stb_image"] = "OpenGLTest/vendor/stb_image/"
 IncludeDir["vendor"] = "OpenGLTest/vendor/"
+IncludeDir["imgui"] = "OpenGLTest/vendor/imgui"
 
 include "OpenGLTest/vendor/GLFW"
 include "OpenGLTest/vendor/Glad"
@@ -43,12 +44,14 @@ project "OpenGLTest"
         "%{prj.name}/vendor/stb_image/**.h",
         "%{prj.name}/vendor/stb_image/**.cpp",
         "%{prj.name}/vendor/glm/**",
-        "%{prj.name}/res/textures/**.png"
+        "%{prj.name}/res/textures/**.png",
+        "%{prj.name}/vendor/imgui/**"
     }
 
     excludes
     {
         "%{prj.name}/vendor/glm/**/dummy.cpp",
+        "%{prj.name}/vendor/imgui/main.cpp",
     }
 
     includedirs
@@ -57,6 +60,7 @@ project "OpenGLTest"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.vendor}",
+        "%{IncludeDir.imgui}",
         "src"
     }
 

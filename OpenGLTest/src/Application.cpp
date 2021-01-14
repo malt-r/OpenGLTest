@@ -10,6 +10,9 @@
 #include "Shader.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 #include <iostream>
 
@@ -52,6 +55,8 @@ int main(void)
     }
 
     {
+
+
         const int vertecesSize = 8 * 2;
         // first vec2: x,y; second vec2: texture coordinates:
         // openGL texcoods:
@@ -71,8 +76,6 @@ int main(void)
             200.0f, 200.0f, 1.0f, 1.0f,
             100.0f, 200.0f, 0.0f, 1.0f
         };
-
-        float animatedPositions[vertecesSize] = { 0 };
 
         const int numIndices = 6;
         unsigned int indices[numIndices] =
@@ -114,18 +117,11 @@ int main(void)
         // else 100 units to the left to create the illusion of moving a camera
         glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
 
-        // move 'model' more to th center of the screen --> translate 200 units up and right
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
-
-        // column-major --> multiplication from right to left to create the result we want
-        // which is first apply the view matrix, then the projection matrix
-        glm::mat4 mvp = proj * view * model;
 
 
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
         shader.SetUniform4f("u_Color", 0.5f, 0.0f, 0.0f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", mvp);
 
         float r = 0.0f;
         float rIncrement = 0.05f;
@@ -149,22 +145,34 @@ int main(void)
 
         Renderer renderer;
 
+        // setup imgui
+        ImGui::CreateContext();
+
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        const char* glsl_version = "#version 330";
+        ImGui_ImplOpenGL3_Init(glsl_version);
+
+        ImGui::StyleColorsDark();
+
+        glm::vec3 translation(200, 200, 0);
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
-            //update animatedPositions
-#if ANIMATE == 1
-            for (int i = 0; i < positionSize; i++)
-            {
-                if (i % 2 == 0)
-                   sign = -sign;
-                animatedPositions[i] = positions[i] + sign * o;
-            }
-            vb.Update(animatedPositions, positionSize * sizeof(float));
-#endif
-
             /* Render here */
             renderer.Clear();
+
+            // new imGui frame
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
+
+            // move 'model' more to th center of the screen --> translate 200 units up and right
+
+            // column-major --> multiplication from right to left to create the result we want
+            // which is first apply the view matrix, then the projection matrix
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
+            glm::mat4 mvp = proj * view * model;
+            shader.SetUniformMat4f("u_MVP", mvp);
 
             // typical procedure before draw call
             shader.SetUniform4f("u_Color", r, 0.0f, 0.5f, 1.0f);
@@ -183,12 +191,18 @@ int main(void)
 
             r += rIncrement;
 
-            if (o > 0.4f || o < -0.4f )
+            // Imgui sample window
             {
-                oIncrement = -oIncrement;
+                // use memory-layout of glm::vec3 to actually pass in all members as an array here
+                ImGui::SliderFloat3("float", &translation.x, 0.0f, 960.0f);
+
+                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             }
 
-            o += oIncrement;
+            ImGui::Render();
+            int display_w, display_h;
+            glfwGetFramebufferSize(window, &display_w, &display_h);
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
@@ -197,6 +211,10 @@ int main(void)
             glfwPollEvents();
         }
     }
+
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     // glfwTerminate destroys the openGL-context
     glfwTerminate();
     // because there is no valid openGL context here, when trying to deallocate the stack allocated vertex and index buffer
