@@ -110,6 +110,9 @@ int main(void)
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
+        delete currentTest;
+        if (currentTest != testMenu)
+            delete testMenu;
     }
 
     ImGui_ImplGlfw_Shutdown();
