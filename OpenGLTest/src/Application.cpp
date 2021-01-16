@@ -71,10 +71,10 @@ int main(void)
 
         float verteces[vertecesSize] =
         {
-            100.0f, 100.0f, 0.0f, 0.0f,
-            200.0f, 100.0f, 1.0f, 0.0f,
-            200.0f, 200.0f, 1.0f, 1.0f,
-            100.0f, 200.0f, 0.0f, 1.0f
+            -50.0f, -50.0f, 0.0f, 0.0f,
+             50.0f, -50.0f, 1.0f, 0.0f,
+             50.0f,  50.0f, 1.0f, 1.0f,
+            -50.0f,  50.0f, 0.0f, 1.0f
         };
 
         const int numIndices = 6;
@@ -106,18 +106,8 @@ int main(void)
         // create index buffer (index buffer object)
         IndexBuffer ib(indices, numIndices);
 
-        // create ortho matrix with 4:3 aspect ratio (like our window)
-        // orthographic projection: objects further away won't get smaller
-        // TODO: research projection matrix
-        // the matrix itself defines the bounbaries for the projection
         glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.0f, 1.0f);
-
-        // 'move' the camera 100 units to the right
-        // because there is no such thing as a camera, we need to move everything
-        // else 100 units to the left to create the illusion of moving a camera
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
-
-
+        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
@@ -125,9 +115,6 @@ int main(void)
 
         float r = 0.0f;
         float rIncrement = 0.05f;
-
-        float o = 0.0f;
-        float oIncrement = 0.008f;
 
         // currently no blending supported...
         Texture texture("res/textures/git.png");
@@ -141,8 +128,6 @@ int main(void)
         vb.Unbind();
         ib.Unbind();
 
-        float sign = 1.f;
-
         Renderer renderer;
 
         // setup imgui
@@ -154,7 +139,8 @@ int main(void)
 
         ImGui::StyleColorsDark();
 
-        glm::vec3 translation(200, 200, 0);
+        glm::vec3 translationA(200, 200, 0);
+        glm::vec3 translationB(400, 200, 0);
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
@@ -166,18 +152,28 @@ int main(void)
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            // move 'model' more to th center of the screen --> translate 200 units up and right
+            shader.Bind();
 
-            // column-major --> multiplication from right to left to create the result we want
-            // which is first apply the view matrix, then the projection matrix
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
-            glm::mat4 mvp = proj * view * model;
-            shader.SetUniformMat4f("u_MVP", mvp);
+            // draw two objects in different positions with same shader, vertex array and index buffer
+            // but supply different MVPs
+            {
+                // column-major --> multiplication from right to left to create the result we want
+                // which is first apply the view matrix, then the projection matrix
+                glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);
+                glm::mat4 mvp = proj * view * model;
+                
+                shader.SetUniformMat4f("u_MVP", mvp);
+                renderer.Draw(va, ib, shader);
+            }
 
-            // typical procedure before draw call
-            shader.SetUniform4f("u_Color", r, 0.0f, 0.5f, 1.0f);
+            {
+                glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB);
+                glm::mat4 mvp = proj * view * model;
 
-            renderer.Draw(va, ib, shader);
+                shader.SetUniformMat4f("u_MVP", mvp);
+                renderer.Draw(va, ib, shader);
+            }
+
 
             // animate color
             if (r > 1.0f)
@@ -188,13 +184,15 @@ int main(void)
             {
                 rIncrement = 0.05f;
             }
-
             r += rIncrement;
 
-            // Imgui sample window
+
+           // Imgui sample window
             {
                 // use memory-layout of glm::vec3 to actually pass in all members as an array here
-                ImGui::SliderFloat3("float", &translation.x, 0.0f, 960.0f);
+                ImGui::SliderFloat3("objA", &translationA.x, 0.0f, 960.0f);
+
+                ImGui::SliderFloat3("objB", &translationB.x, 0.0f, 960.0f);
 
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             }
