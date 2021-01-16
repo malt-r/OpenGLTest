@@ -1346,6 +1346,7 @@
     </ClInclude>
     <ClInclude Include="src\Tests\Test.h" />
     <ClInclude Include="src\Tests\TestClearColor.h" />
+    <ClInclude Include="src\Tests\TestPicker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -1394,6 +1395,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Tests\TestClearColor.cpp" />
+    <ClCompile Include="src\Tests\TestPicker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader">

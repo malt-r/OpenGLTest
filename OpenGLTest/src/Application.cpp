@@ -15,6 +15,7 @@
 #include "imgui_impl_opengl3.h"
 
 #include "Tests/TestClearColor.h"
+#include "Tests/TestPicker.h"
 
 #include <iostream>
 
@@ -72,22 +73,27 @@ int main(void)
 
         ImGui::StyleColorsDark();
 
+        // TODO: make menu for picking test
 
 
-        Test::TestClearColor test;
+        //Test::TestClearColor test;
+        Test::TestPicker testPicker;
         while (!glfwWindowShouldClose(window))
         {
             renderer.Clear();
 
-            test.OnUpdate(0.0f);
-            test.OnRender();
+            testPicker.OnTestUpdate(0.f);
+            testPicker.OnTestRender();
+            //test.OnUpdate(0.0f);
+            //test.OnRender();
 
             // new imGui frame
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            test.OnImGuiRender();
+            //test.OnImGuiRender();
+            testPicker.OnImGuiRender();
 
             ImGui::Render();
             int display_w, display_h;
