@@ -73,27 +73,34 @@ int main(void)
 
         ImGui::StyleColorsDark();
 
-        // TODO: make menu for picking test
+        Test::Test* currentTest = nullptr;
+        Test::TestMenu* testMenu = new Test::TestMenu(currentTest);
+        currentTest = testMenu;
 
+        testMenu->RegisterTest<Test::TestClearColor>("Clear Color");
 
-        //Test::TestClearColor test;
-        Test::TestPicker testPicker;
         while (!glfwWindowShouldClose(window))
         {
             renderer.Clear();
-
-            testPicker.OnTestUpdate(0.f);
-            testPicker.OnTestRender();
-            //test.OnUpdate(0.0f);
-            //test.OnRender();
 
             // new imGui frame
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            //test.OnImGuiRender();
-            testPicker.OnImGuiRender();
+            if (nullptr != currentTest)
+            {
+                currentTest->OnUpdate(0.f);
+                currentTest->OnRender();
+                ImGui::Begin("Test");
+                if (currentTest != testMenu && ImGui::Button("<-"))
+                {
+                    delete currentTest;
+                    currentTest = testMenu;
+                }
+                currentTest->OnImGuiRender();
+                ImGui::End();
+            }
 
             ImGui::Render();
             int display_w, display_h;

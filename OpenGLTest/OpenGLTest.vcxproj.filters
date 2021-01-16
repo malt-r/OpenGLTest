@@ -1396,6 +1396,7 @@
     </ClCompile>
     <ClCompile Include="src\Tests\TestClearColor.cpp" />
     <ClCompile Include="src\Tests\TestPicker.cpp" />
+    <ClCompile Include="src\Tests\Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader">
