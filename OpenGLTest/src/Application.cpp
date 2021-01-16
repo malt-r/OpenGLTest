@@ -15,7 +15,7 @@
 #include "imgui_impl_opengl3.h"
 
 #include "Tests/TestClearColor.h"
-#include "Tests/TestPicker.h"
+#include "Tests/TestTexture2D.h"
 
 #include <iostream>
 
@@ -78,6 +78,7 @@ int main(void)
         currentTest = testMenu;
 
         testMenu->RegisterTest<Test::TestClearColor>("Clear Color");
+        testMenu->RegisterTest<Test::TestTexture2D>("Texture 2D");
 
         while (!glfwWindowShouldClose(window))
         {
