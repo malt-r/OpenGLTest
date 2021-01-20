@@ -1347,6 +1347,7 @@
     <ClInclude Include="src\Tests\Test.h" />
     <ClInclude Include="src\Tests\TestClearColor.h" />
     <ClInclude Include="src\Tests\TestTexture2D.h" />
+    <ClInclude Include="src\Tests\TestCube3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -1397,6 +1398,7 @@
     <ClCompile Include="src\Tests\TestClearColor.cpp" />
     <ClCompile Include="src\Tests\Test.cpp" />
     <ClCompile Include="src\Tests\TestTexture2D.cpp" />
+    <ClCompile Include="src\Tests\TestCube3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader">
@@ -1405,6 +1407,7 @@
     <None Include="vendor\glm\CMakeLists.txt">
       <Filter>vendor\glm</Filter>
     </None>
+    <None Include="res\shader\Basic_VertexColor.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\git.png">

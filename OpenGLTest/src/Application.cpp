@@ -16,8 +16,10 @@
 
 #include "Tests/TestClearColor.h"
 #include "Tests/TestTexture2D.h"
+#include "Tests/TestCube3D.h"
 
 #include <iostream>
+#include <chrono>
 
 #define ANIMATE 0
 
@@ -37,7 +39,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(2*960, 2*540, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -60,6 +62,8 @@ int main(void)
     {
         // setup alpha blending
         GLCall(glEnable(GL_BLEND));
+        GLCall(glEnable(GL_DEPTH_TEST));
+        GLCall(glDepthFunc(GL_LESS));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
         Renderer renderer;
@@ -79,9 +83,15 @@ int main(void)
 
         testMenu->RegisterTest<Test::TestClearColor>("Clear Color");
         testMenu->RegisterTest<Test::TestTexture2D>("Texture 2D");
+        testMenu->RegisterTest<Test::TestCube3D>("Cube 3D");
+
+        using clock = std::chrono::high_resolution_clock;
+        auto time_start = clock::now();
 
         while (!glfwWindowShouldClose(window))
         {
+            auto delta_time = clock::now() - time_start;
+            time_start = clock::now();
             renderer.Clear();
 
             // new imGui frame
@@ -91,7 +101,7 @@ int main(void)
 
             if (nullptr != currentTest)
             {
-                currentTest->OnUpdate(0.f);
+                currentTest->OnUpdate(delta_time.count() / (1000.f *1000.f*1000.f));
                 currentTest->OnRender();
                 ImGui::Begin("Test");
                 if (currentTest != testMenu && ImGui::Button("<-"))

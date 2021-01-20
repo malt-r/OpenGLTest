@@ -11,10 +11,6 @@ namespace Test
 {
     TestTexture2D::TestTexture2D()
         : 
-        m_VAO(nullptr), 
-        m_Shader(nullptr),
-        m_IndexBuffer(nullptr),
-        m_Texture(nullptr),
         m_Projection(glm::ortho(0.f, 960.f, 0.f, 540.f, -1.0f, 1.0f)),
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
         m_TranslationA(200, 200, 0),
