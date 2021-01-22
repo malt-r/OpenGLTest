@@ -10,36 +10,36 @@
 namespace Test
 {
     TestCube3D::TestCube3D()
-        : 
-        m_aspectRatio(960.f/540.f),
+        :
+        m_aspectRatio(960.f / 540.f),
         m_Far(1.0f),
         m_Near(-1.0f),
-        m_Projection(glm::perspective(glm::radians<float>(45.0f), m_aspectRatio, m_Near, m_Far)),
+        m_FOVDeg(45.f),
+        m_Projection(glm::perspective(glm::radians<float>(m_FOVDeg), m_aspectRatio, m_Near, m_Far)),
         m_Translation(glm::vec3(0, 0, 0)),
-        //m_Projection(glm::ortho(0.f, 960.f, 0.f, 540.f, -1.0f, 1.0f)),
         m_ViewTranslation(glm::vec3(0,0,0)),
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
         m_RotationAxis(glm::vec3(1, 1, 0)),
         m_Rotation(glm::rotate(glm::mat4(1.0f), 0.f, m_RotationAxis)),
+        m_ScaleFactors(glm::vec3(1.f, 1.f, 1.f)),
+        m_Scale(glm::scale(glm::mat4(1.0f), m_ScaleFactors)),
         m_RotationRad(glm::quarter_pi<float>()),
         m_RotSpeedRadPerS(glm::quarter_pi<float>())
     {
         float positions[] =
         {
             // front side
-            -50.0f, -50.0f, 50.f,
-             50.0f, -50.0f, 50.f,
-             50.0f,  50.0f, 50.f,
-            -50.0f,  50.0f, 50.f,
+            -0.5f, -0.5f, 0.5f,
+             0.5f, -0.5f, 0.5f,
+             0.5f,  0.5f, 0.5f,
+            -0.5f,  0.5f, 0.5f,
 
             // back side
-            -50.0f, -50.0f, -50.f,
-             50.0f, -50.0f, -50.f,
-             50.0f,  50.0f, -50.f,
-            -50.0f,  50.0f, -50.f,
+            -0.5f, -0.5f, -0.5f,
+             0.5f, -0.5f, -0.5f,
+             0.5f,  0.5f, -0.5f,
+            -0.5f,  0.5f, -0.5f,
         };
-
-        Vertex vertecies[8] = {};
 
         glm::vec4 color;
         int iter;
@@ -54,20 +54,20 @@ namespace Test
             {
                 color = glm::vec4(0.f, 1.f, 0.f, 1.f);
             }
-            //else if (iter == 2)
-            //{
-            //    color = glm::vec4(0.f, 0.f, 1.f, 1.f);
-            //}
-            //else 
-            //{
-            //    color = glm::vec4(0.f, 0.f, 0.f, 1.f);
-            //}
+            else if (iter == 2)
+            {
+                color = glm::vec4(0.f, 0.f, 1.f, 1.f);
+            }
+            else 
+            {
+                color = glm::vec4(0.f, 0.f, 0.f, 1.f);
+            }
 
-            vertecies[i].Position = { positions[i*3], positions[i*3 + 1], positions[i*3 + 2] };
-            vertecies[i].Color = color;
+            m_vertecies[i].Position = { positions[i*3], positions[i*3 + 1], positions[i*3 + 2] };
+            m_vertecies[i].Color = color;
         }
 
-        m_VertexBuffer = std::make_unique<VertexBuffer>(vertecies, sizeof(vertecies));
+        m_VertexBuffer = std::make_unique<VertexBuffer>(m_vertecies, sizeof(m_vertecies));
 
 
         VertexBufferLayout layout;
@@ -109,41 +109,6 @@ namespace Test
 
         m_IndexBuffer = std::make_unique<IndexBuffer>(indicies, sizeof(indicies) / sizeof(uint32_t));
 
-
-        //const int verteciesSize = 7 * 4;
-
-        //float vertecies[verteciesSize] =
-        //{
-        //    -50.0f, -50.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        //     50.0f, -50.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        //     50.0f,  50.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        //    -50.0f,  50.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
-        //};
-
-        //const int numIndices = 6;
-        //unsigned int indices[numIndices] =
-        //{
-        //    0,1,2,
-        //    2,3,0
-        //};
-
-        //m_VertexBuffer = std::make_unique<VertexBuffer>(vertecies, verteciesSize * sizeof(float));
-
-        //VertexBufferLayout layout;
-        //// creates a new vertex-attribute of two float-components
-        //layout.Push<float>(3);
-        //// texcoords
-        //layout.Push<float>(4);
-
-        //// adds vertex buffer with layout to vertex array
-        //m_VAO = std::make_unique<VertexArray>();
-        //m_VAO->AddBuffer(*m_VertexBuffer, layout);
-
-        //// create index buffer (index buffer object)
-        //m_IndexBuffer = std::make_unique<IndexBuffer>(indices, numIndices);
-
-
-
         m_Shader = std::make_unique<Shader>("res/shader/Basic_VertexColor.shader");
 
         m_VertexBuffer->Unbind();
@@ -171,12 +136,25 @@ namespace Test
         renderer.Clear();
 
         // calc mvp
-        m_Projection = glm::perspective(45.0f, m_aspectRatio, m_Near, m_Far);
-        //m_Projection = glm::ortho(0.f, 960.f, 0.f, 540.f, m_Near, m_Far),
+        m_Projection = glm::perspective(glm::radians(m_FOVDeg), m_aspectRatio, m_Near, m_Far);
         m_View = glm::translate(glm::mat4(1.0f), m_ViewTranslation);
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), m_Translation) * m_Rotation;
-        
+        m_Scale = glm::scale(glm::mat4(1.f), m_ScaleFactors);
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), m_Translation) * m_Rotation * m_Scale;
+
         glm::mat4 mvp = m_Projection * m_View * model;
+
+        for (int i = 0; i < 8; i++)
+        {
+            glm::vec4 vertexPos = 
+                glm::vec4
+                (
+                    m_vertecies[i].Position.x,
+                    m_vertecies[i].Position.y,
+                    m_vertecies[i].Position.z,
+                    1
+                );
+            m_vertexPosScreenSpace[i] = mvp * vertexPos;
+        }
 
         m_Shader->Bind();
         m_Shader->SetUniformMat4f("u_MVP", mvp);
@@ -187,12 +165,26 @@ namespace Test
     void TestCube3D::OnImGuiRender()
     {
         ImGui::SliderFloat3("Object Translation", &m_Translation.x, -500.0f, 500.0f);
+        ImGui::SliderFloat3("Object Scale", &m_ScaleFactors.x, 0.05f, 10.0f);
         ImGui::SliderFloat3("Rotation Axis", &m_RotationAxis.x, -1.0f, 1.0f);
-        ImGui::SliderFloat("Speed Speed Speed", &m_RotSpeedRadPerS, glm::quarter_pi<float>(), glm::pi<float>());
+
+        ImGui::SliderFloat("Speed Speed Speed", &m_RotSpeedRadPerS, glm::quarter_pi<float>(), 10.f* glm::pi<float>());
         ImGui::SliderFloat3("View Translation", &m_ViewTranslation.x, -500.0f, 500.0f);
 
         ImGui::SliderFloat("Near", &m_Near, -10.0f, 10.0f);
         ImGui::SliderFloat("Far", &m_Far, 0.0f, 300.0f);
+        ImGui::SliderFloat("FOV in Deg", &m_FOVDeg, 10.f, 89.f);
+
+        ImGui::Text("Vert0: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[0].x, m_vertexPosScreenSpace[0].y, m_vertexPosScreenSpace[0].z, m_vertexPosScreenSpace[0].w);
+        ImGui::Text("Vert1: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[1].x, m_vertexPosScreenSpace[1].y, m_vertexPosScreenSpace[1].z, m_vertexPosScreenSpace[1].w);
+        ImGui::Text("Vert2: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[2].x, m_vertexPosScreenSpace[2].y, m_vertexPosScreenSpace[2].z, m_vertexPosScreenSpace[2].w);
+        ImGui::Text("Vert3: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[3].x, m_vertexPosScreenSpace[3].y, m_vertexPosScreenSpace[3].z, m_vertexPosScreenSpace[3].w);
+        ImGui::Text("Vert4: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[4].x, m_vertexPosScreenSpace[4].y, m_vertexPosScreenSpace[4].z, m_vertexPosScreenSpace[4].w);
+        ImGui::Text("Vert5: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[5].x, m_vertexPosScreenSpace[5].y, m_vertexPosScreenSpace[5].z, m_vertexPosScreenSpace[5].w);
+        ImGui::Text("Vert6: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[6].x, m_vertexPosScreenSpace[6].y, m_vertexPosScreenSpace[6].z, m_vertexPosScreenSpace[6].w);
+        ImGui::Text("Vert7: x: %.3f, y: %.3f, z: %.3f, w: %.3f", m_vertexPosScreenSpace[7].x, m_vertexPosScreenSpace[7].y, m_vertexPosScreenSpace[7].z, m_vertexPosScreenSpace[7].w);
+
+
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     }
 

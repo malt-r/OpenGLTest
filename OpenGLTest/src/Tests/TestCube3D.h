@@ -39,6 +39,7 @@ namespace Test
         float m_aspectRatio;
         float m_Far;
         float m_Near;
+        float m_FOVDeg;
 
         glm::vec3 m_RotationAxis;
         glm::mat4 m_Rotation;
@@ -46,7 +47,11 @@ namespace Test
         glm::mat4 m_Projection;
         glm::vec3 m_ViewTranslation;
         glm::mat4 m_View;
+        glm::vec3 m_ScaleFactors;
+        glm::mat4 m_Scale;
 
+        Vertex m_vertecies[8] = {};
+        glm::vec4 m_vertexPosScreenSpace[8] = {};
 
         float m_RotationRad;
         float m_RotSpeedRadPerS;
