@@ -1348,6 +1348,8 @@
     <ClInclude Include="src\Tests\TestClearColor.h" />
     <ClInclude Include="src\Tests\TestTexture2D.h" />
     <ClInclude Include="src\Tests\TestCube3D.h" />
+    <ClInclude Include="src\Tests\Test3DTexture.h" />
+    <ClInclude Include="src\ObjParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -1399,6 +1401,8 @@
     <ClCompile Include="src\Tests\Test.cpp" />
     <ClCompile Include="src\Tests\TestTexture2D.cpp" />
     <ClCompile Include="src\Tests\TestCube3D.cpp" />
+    <ClCompile Include="src\Tests\Test3DTexture.cpp" />
+    <ClCompile Include="src\ObjParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader">
@@ -1408,6 +1412,7 @@
       <Filter>vendor\glm</Filter>
     </None>
     <None Include="res\shader\Basic_VertexColor.shader" />
+    <None Include="res\shader\Basic_3D_TexCoord.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\git.png">
@@ -1416,5 +1421,9 @@
     <Image Include="res\textures\help.png">
       <Filter>res\textures</Filter>
     </Image>
+    <Image Include="res\textures\numbers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\obj\cube_with_numbers.obj" />
   </ItemGroup>
 </Project>

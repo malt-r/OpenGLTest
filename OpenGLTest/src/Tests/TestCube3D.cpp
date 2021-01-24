@@ -127,6 +127,9 @@ namespace Test
         //interpret deltatime as s
         float deltaRad = m_RotSpeedRadPerS * deltaTime;
         m_RotationRad = m_RotationRad + deltaRad;
+
+        auto m_axisRotation = glm::rotate(glm::mat4(1.f), deltaRad, glm::vec3(0,1,0));
+        m_RotationAxis = glm::vec4(m_RotationAxis.x,m_RotationAxis.y, m_RotationAxis.z, 1) * m_axisRotation;
         m_Rotation = glm::rotate(glm::mat4(1.f), m_RotationRad, m_RotationAxis);
     }
 

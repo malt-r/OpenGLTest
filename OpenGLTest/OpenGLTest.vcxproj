@@ -92,9 +92,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\IndexBuffer.h" />
+    <ClInclude Include="src\ObjParser.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Tests\Test.h" />
+    <ClInclude Include="src\Tests\Test3DTexture.h" />
     <ClInclude Include="src\Tests\TestClearColor.h" />
     <ClInclude Include="src\Tests\TestCube3D.h" />
     <ClInclude Include="src\Tests\TestTexture2D.h" />
@@ -533,9 +535,11 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
+    <ClCompile Include="src\ObjParser.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Tests\Test.cpp" />
+    <ClCompile Include="src\Tests\Test3DTexture.cpp" />
     <ClCompile Include="src\Tests\TestClearColor.cpp" />
     <ClCompile Include="src\Tests\TestCube3D.cpp" />
     <ClCompile Include="src\Tests\TestTexture2D.cpp" />
@@ -553,12 +557,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
+    <None Include="res\shader\Basic_3D_TexCoord.shader" />
     <None Include="res\shader\Basic_VertexColor.shader" />
     <None Include="vendor\glm\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\git.png" />
     <Image Include="res\textures\help.png" />
+    <Image Include="res\textures\numbers.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
@@ -567,6 +573,12 @@
     <ProjectReference Include="vendor\Glad\Glad.vcxproj">
       <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\obj\cube_with_numbers.obj">
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Media>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

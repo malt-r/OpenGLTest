@@ -2,10 +2,10 @@
 #version 330 core
 
 layout(location = 0) in vec4 position;
-layout(location = 1) in vec4 vertColor;
+layout(location = 1) in vec2 texCoord;
 
 // this is called a varying --> method to get data from one shader to another
-out vec4 v_interpColor;
+out vec2 v_TexCoord;
 
 // model view projection matrix
 uniform mat4 u_MVP;
@@ -13,7 +13,7 @@ uniform mat4 u_MVP;
 void main()
 {
     gl_Position = u_MVP * position;
-    v_interpColor = vertColor;
+    v_TexCoord = texCoord;
 }
 
 #shader fragment
@@ -21,9 +21,17 @@ void main()
 
 layout(location = 0) out vec4 color;
 
-in vec4 v_interpColor;
+in vec2 v_TexCoord;
+
+uniform vec4 u_Color;
+
+// this will be passed in as an interger, which specifies the texture slot
+// the desired texture was bound to 
+uniform sampler2D u_Texture;
 
 void main()
 {
-    color = v_interpColor;
+    vec4 texColor = texture(u_Texture, v_TexCoord);
+
+    color = texColor;
 }

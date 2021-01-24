@@ -17,6 +17,7 @@
 #include "Tests/TestClearColor.h"
 #include "Tests/TestTexture2D.h"
 #include "Tests/TestCube3D.h"
+#include "Tests/Test3DTexture.h"
 
 #include <iostream>
 #include <chrono>
@@ -84,6 +85,7 @@ int main(void)
         testMenu->RegisterTest<Test::TestClearColor>("Clear Color");
         testMenu->RegisterTest<Test::TestTexture2D>("Texture 2D");
         testMenu->RegisterTest<Test::TestCube3D>("Cube 3D");
+        testMenu->RegisterTest<Test::Test3DTexture>("3D Texture");
 
         using clock = std::chrono::high_resolution_clock;
         auto time_start = clock::now();
