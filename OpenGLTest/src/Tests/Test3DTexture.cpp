@@ -11,8 +11,8 @@ namespace Test
         m_TexturePath("res/textures/numbers.png"),
         // I currently don't really understand, what is going on with the near and far
         // planes and the z-direction of openGL..
-        m_Far(-1.f),
-        m_Near(100.f),
+        m_Far(100.f),
+        m_Near(1.f),
         m_FOVDeg(45.f),
         m_Projection(glm::perspective(glm::radians(m_FOVDeg), 960.f/540.f, m_Near, m_Far)),
         m_Translation(glm::vec3(0, 0, 200)),
@@ -20,7 +20,7 @@ namespace Test
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
         m_RotationAxis(glm::vec3(1, 1, 0)),
         m_Rotation(glm::rotate(glm::mat4(1.0f), 0.f, m_RotationAxis)),
-        m_ScaleFactors(glm::vec3(20.f, 20.f, 20.f)),
+        m_ScaleFactors(glm::vec3(3.f, 3.f, 3.f)),
         m_Scale(glm::scale(glm::mat4(1.0f), m_ScaleFactors)),
         m_RotationRad(glm::quarter_pi<float>()),
         m_RotSpeedRadPerS(glm::quarter_pi<float>())
@@ -101,8 +101,8 @@ namespace Test
         ImGui::SliderFloat("Speed Speed Speed", &m_RotSpeedRadPerS, glm::quarter_pi<float>(), 10.f* glm::pi<float>());
         ImGui::SliderFloat3("View Translation", &m_ViewTranslation.x, -500.0f, 500.0f);
 
-        ImGui::SliderFloat("Near", &m_Near, -100.0f, 100.0f);
-        ImGui::SliderFloat("Far", &m_Far, -100.0f, 100.0f);
+        ImGui::SliderFloat("Near", &m_Near, -10.0f, 10.0f);
+        ImGui::SliderFloat("Far", &m_Far, -100.0f, 1000.0f);
         ImGui::SliderFloat("FOV in Deg", &m_FOVDeg, 10.f, 89.f);
 
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

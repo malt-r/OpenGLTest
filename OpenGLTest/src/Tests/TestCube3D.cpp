@@ -12,11 +12,11 @@ namespace Test
     TestCube3D::TestCube3D()
         :
         m_aspectRatio(960.f / 540.f),
-        m_Far(1.0f),
-        m_Near(-1.0f),
+        m_Far(100.0f),
+        m_Near(1.0f),
         m_FOVDeg(45.f),
         m_Projection(glm::perspective(glm::radians<float>(m_FOVDeg), m_aspectRatio, m_Near, m_Far)),
-        m_Translation(glm::vec3(0, 0, 0)),
+        m_Translation(glm::vec3(0, 0, -6.f)),
         m_ViewTranslation(glm::vec3(0,0,0)),
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
         m_RotationAxis(glm::vec3(1, 1, 0)),
