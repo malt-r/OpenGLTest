@@ -15,7 +15,7 @@ namespace Test
         m_Near(1.f),
         m_FOVDeg(45.f),
         m_Projection(glm::perspective(glm::radians(m_FOVDeg), 960.f/540.f, m_Near, m_Far)),
-        m_Translation(glm::vec3(0, 0, 200)),
+        m_Translation(glm::vec3(0, 0, -30)),
         m_ViewTranslation(glm::vec3(0,0,0)),
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
         m_RotationAxis(glm::vec3(1, 1, 0)),
