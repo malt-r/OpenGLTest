@@ -22,7 +22,33 @@
 #include <iostream>
 #include <chrono>
 
-#define ANIMATE 0
+struct AllocationMetrics
+{
+    uint32_t TotalAllocated;
+    uint32_t TotalFreed;
+
+    uint32_t CurrentUsage() { return TotalAllocated - TotalFreed; }
+
+};
+
+static AllocationMetrics s_AllocationMetrics;
+
+void PrintMemoryUsage() 
+{ 
+    std::cout << "Currently using " << s_AllocationMetrics.CurrentUsage() << " bytes\n";
+}
+
+void* operator new (size_t size)
+{
+    s_AllocationMetrics.TotalAllocated += size;
+    return malloc(size);
+}
+
+void operator delete (void* memory, size_t size)
+{
+    s_AllocationMetrics.TotalFreed += size;
+    free(memory);
+}
 
 // TODO: try modifying the vertex positions with sin or cos timebased?
 
@@ -112,6 +138,7 @@ int main(void)
                     currentTest = testMenu;
                 }
                 currentTest->OnImGuiRender();
+                ImGui::Text("Bytes in usage %u", s_AllocationMetrics.CurrentUsage());
                 ImGui::End();
             }
 

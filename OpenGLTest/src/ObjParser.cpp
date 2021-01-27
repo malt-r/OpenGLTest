@@ -8,11 +8,10 @@
 
 ObjModelData ObjParser::ReadObjectModelData(const std::string& filePath, const std::string& texturePath)
 {
-    std::vector<glm::vec3*> vertecies;
-    std::vector<glm::vec2*> uvCoords;
-    std::vector<glm::vec3*> vertexNormals;
-    std::vector<std::array<ObjFaceData, 3>*> faceDataEntries;
-    //std::string texture;
+    std::vector<std::unique_ptr<glm::vec3>> vertecies;
+    std::vector<std::unique_ptr<glm::vec2>> uvCoords;
+    std::vector<std::unique_ptr<glm::vec3>> vertexNormals;
+    std::vector<std::unique_ptr<std::array<ObjFaceData, 3>>> faceDataEntries;
 
     std::ifstream fs(filePath);
     if (!fs)
@@ -32,26 +31,26 @@ ObjModelData ObjParser::ReadObjectModelData(const std::string& filePath, const s
             {
             case DataType::vertex:
             {
-                glm::vec3* vertexCoord = ParseVec3(lineStream);
-                vertecies.push_back(vertexCoord);
+                std::unique_ptr<glm::vec3> vertexCoord = ParseVec3(lineStream);
+                vertecies.emplace_back(std::move(vertexCoord));
                 break;
             }
             case DataType::uvCoord:
             {
-                glm::vec2* uvCoord = ParseVec2(lineStream);
-                uvCoords.push_back(uvCoord);
+                std::unique_ptr<glm::vec2> uvCoord = ParseVec2(lineStream);
+                uvCoords.emplace_back(std::move(uvCoord));
                 break;
             }
             case DataType::vertexNormal:
             {
-                glm::vec3* vertexNormal = ParseVec3(lineStream);
-                vertexNormals.push_back(vertexNormal);
+                std::unique_ptr<glm::vec3> vertexNormal = ParseVec3(lineStream);
+                vertexNormals.emplace_back(std::move(vertexNormal));
                 break;
             }
             case DataType::faceData:
             {
-                std::array<ObjFaceData, 3>* faceData = ParseFaceData(lineStream); 
-                faceDataEntries.push_back(faceData);
+                std::unique_ptr<std::array<ObjFaceData, 3>> faceData = ParseFaceData(lineStream); 
+                faceDataEntries.emplace_back(std::move(faceData));
                 break;
             }
             default:
@@ -59,8 +58,8 @@ ObjModelData ObjParser::ReadObjectModelData(const std::string& filePath, const s
             }
         }
 
-        return { vertecies, uvCoords, vertexNormals, faceDataEntries, texturePath };
     }
+    return { std::move(vertecies), std::move(uvCoords), std::move(vertexNormals), std::move(faceDataEntries), texturePath };
 }
 
 bool ObjParser::CreateVertexAndIndexDataFromObjData
@@ -72,8 +71,6 @@ bool ObjParser::CreateVertexAndIndexDataFromObjData
 {
     bool bRet = true;
     // just assume, that the vectors will be empty
-
-    //std::vector<float> vertexData;
 
     // problem:
     // in obj format there different uv coords for the same vertex possible,
@@ -89,7 +86,7 @@ bool ObjParser::CreateVertexAndIndexDataFromObjData
     // or just use std::pair?
     std::unordered_set<uint_fast64_t> vertexUvIdxSet;
     uint_fast64_t identifier;
-    for (const std::array<ObjFaceData, 3>*face : modelData.faceData)
+    for (const std::unique_ptr<std::array<ObjFaceData, 3>>& face : modelData.faceData)
     {
         for (const ObjFaceData& faceData : *face)
         {
@@ -131,7 +128,7 @@ bool ObjParser::CreateVertexAndIndexDataFromObjData
     // real indicies
 
     //std::vector<uint32_t> indexData;
-    for (const std::array<ObjFaceData, 3>*face : modelData.faceData)
+    for (const std::unique_ptr<std::array<ObjFaceData, 3>>& face : modelData.faceData)
     {
         for (const ObjFaceData& faceData : *face)
         {
@@ -177,7 +174,7 @@ DataType ObjParser::CheckDataType(std::stringstream& line)
 }
 
 // return smart_ptr?
-glm::vec3* ObjParser::ParseVec3(std::stringstream& lineStream)
+std::unique_ptr<glm::vec3> ObjParser::ParseVec3(std::stringstream& lineStream)
 {
     std::string sf1, sf2, sf3;
     lineStream >> sf1 >> sf2 >> sf3;
@@ -186,10 +183,10 @@ glm::vec3* ObjParser::ParseVec3(std::stringstream& lineStream)
     float f2 =  atof(sf2.c_str());
     float f3 =  atof(sf3.c_str());
 
-    return new glm::vec3(f1,f2,f3);
+    return std::make_unique<glm::vec3>(f1,f2,f3);
 }
 
-glm::vec2* ObjParser::ParseVec2(std::stringstream& lineStream)
+std::unique_ptr<glm::vec2> ObjParser::ParseVec2(std::stringstream& lineStream)
 {
     std::string sf1, sf2;
     lineStream >> sf1 >> sf2;
@@ -197,15 +194,15 @@ glm::vec2* ObjParser::ParseVec2(std::stringstream& lineStream)
     float f1 =  atof(sf1.c_str());
     float f2 =  atof(sf2.c_str());
 
-    return new glm::vec2(f1,f2);
+    return std::make_unique<glm::vec2>(f1,f2);
 }
 
-std::array<ObjFaceData, 3>* ObjParser::ParseFaceData(std::stringstream& lineStream)
+std::unique_ptr<std::array<ObjFaceData, 3>> ObjParser::ParseFaceData(std::stringstream& lineStream)
 {
     std::string sf[3];
     lineStream >> sf[0] >> sf[1] >> sf[2];
 
-    std::array<ObjFaceData, 3>* retArr = new std::array<ObjFaceData, 3>();
+    std::unique_ptr<std::array<ObjFaceData, 3>> retArr = std::make_unique<std::array<ObjFaceData, 3>>();
     std::stringstream ss;
     int idx = 0;
 

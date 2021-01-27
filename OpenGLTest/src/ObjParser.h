@@ -20,11 +20,11 @@ struct ObjFaceData
 // use to init vertexBuffer, index buffer, etc.
 struct ObjModelData
 {
-    std::vector<glm::vec3*> vertecies;
-    std::vector<glm::vec2*> uvCoords;
-    std::vector<glm::vec3*> vertexNormals;
+    std::vector<std::unique_ptr<glm::vec3>> vertecies;
+    std::vector<std::unique_ptr<glm::vec2>> uvCoords;
+    std::vector<std::unique_ptr<glm::vec3>> vertexNormals;
     // TODO: make this just a vector, not statically sized array
-    std::vector<std::array<ObjFaceData, 3>*> faceData;
+    std::vector<std::unique_ptr<std::array<ObjFaceData, 3>>> faceData;
     std::string texture;
 };
 
@@ -47,7 +47,7 @@ public:
 private:
     static DataType CheckDataType(std::stringstream& line);
 
-    static glm::vec3* ParseVec3(std::stringstream& lineStream);
-    static glm::vec2* ParseVec2(std::stringstream& lineStream);
-    static std::array<ObjFaceData, 3>* ParseFaceData(std::stringstream& lineStream);
+    static std::unique_ptr<glm::vec3> ParseVec3(std::stringstream& lineStream);
+    static std::unique_ptr<glm::vec2> ParseVec2(std::stringstream& lineStream);
+    static std::unique_ptr<std::array<ObjFaceData, 3>> ParseFaceData(std::stringstream& lineStream);
 };
