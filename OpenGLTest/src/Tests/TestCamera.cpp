@@ -127,6 +127,7 @@ namespace Test
 
     void TestCamera::OnImGuiRender()
     {
+        m_CameraController.OnImguiRender();
         ImGui::SliderFloat3("Object Translation", &m_ModelTranslation.x, -500.0f, 500.0f);
         ImGui::SliderFloat3("Rotation Axis", &m_ModelRotationAxis.x, -1.0f, 1.0f);
 
