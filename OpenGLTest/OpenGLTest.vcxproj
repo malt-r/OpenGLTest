@@ -91,12 +91,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\IndexBuffer.h" />
+    <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\ObjParser.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Tests\Test.h" />
     <ClInclude Include="src\Tests\Test3DTexture.h" />
+    <ClInclude Include="src\Tests\TestCamera.h" />
     <ClInclude Include="src\Tests\TestClearColor.h" />
     <ClInclude Include="src\Tests\TestCube3D.h" />
     <ClInclude Include="src\Tests\TestTexture2D.h" />
@@ -534,12 +537,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
+    <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\ObjParser.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Tests\Test.cpp" />
     <ClCompile Include="src\Tests\Test3DTexture.cpp" />
+    <ClCompile Include="src\Tests\TestCamera.cpp" />
     <ClCompile Include="src\Tests\TestClearColor.cpp" />
     <ClCompile Include="src\Tests\TestCube3D.cpp" />
     <ClCompile Include="src\Tests\TestTexture2D.cpp" />

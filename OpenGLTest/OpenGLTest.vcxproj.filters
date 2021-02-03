@@ -1350,6 +1350,9 @@
     <ClInclude Include="src\Tests\TestCube3D.h" />
     <ClInclude Include="src\Tests\Test3DTexture.h" />
     <ClInclude Include="src\ObjParser.h" />
+    <ClInclude Include="src\Tests\TestCamera.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -1403,6 +1406,9 @@
     <ClCompile Include="src\Tests\TestCube3D.cpp" />
     <ClCompile Include="src\Tests\Test3DTexture.cpp" />
     <ClCompile Include="src\ObjParser.cpp" />
+    <ClCompile Include="src\Tests\TestCamera.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader">

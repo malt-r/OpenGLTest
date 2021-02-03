@@ -8,6 +8,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Input.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "imgui.h"
@@ -18,6 +19,7 @@
 #include "Tests/TestTexture2D.h"
 #include "Tests/TestCube3D.h"
 #include "Tests/Test3DTexture.h"
+#include "Tests/TestCamera.h"
 
 #include <iostream>
 #include <chrono>
@@ -54,7 +56,7 @@ void operator delete (void* memory, size_t size)
 
 int main(void)
 {
-    GLFWwindow* window;
+    static GLFWwindow* s_ApplicationWindow;
 
     /* Initialize the library */
     if (!glfwInit())
@@ -66,15 +68,15 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(2*960, 2*540, "Hello World", NULL, NULL);
-    if (!window)
+    s_ApplicationWindow = glfwCreateWindow(2*960, 2*540, "Hello World", NULL, NULL);
+    if (!s_ApplicationWindow)
     {
         glfwTerminate();
         return -1;
     }
 
     /* Make the window's context current */
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(s_ApplicationWindow);
 
     // sync swap interval with vsync?
     glfwSwapInterval(1);
@@ -98,7 +100,7 @@ int main(void)
         // setup imgui
         ImGui::CreateContext();
 
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplGlfw_InitForOpenGL(s_ApplicationWindow, true);
         const char* glsl_version = "#version 330";
         ImGui_ImplOpenGL3_Init(glsl_version);
 
@@ -112,11 +114,15 @@ int main(void)
         testMenu->RegisterTest<Test::TestTexture2D>("Texture 2D");
         testMenu->RegisterTest<Test::TestCube3D>("Cube 3D");
         testMenu->RegisterTest<Test::Test3DTexture>("3D Texture");
+        testMenu->RegisterTest<Test::TestCamera>("Cameracontroller");
 
         using clock = std::chrono::high_resolution_clock;
         auto time_start = clock::now();
 
-        while (!glfwWindowShouldClose(window))
+        // init input
+        Input::s_Instance()->SetGLFWwindow(s_ApplicationWindow);
+
+        while (!glfwWindowShouldClose(s_ApplicationWindow))
         {
             auto delta_time = clock::now() - time_start;
             time_start = clock::now();
@@ -144,10 +150,10 @@ int main(void)
 
             ImGui::Render();
             int display_w, display_h;
-            glfwGetFramebufferSize(window, &display_w, &display_h);
+            glfwGetFramebufferSize(s_ApplicationWindow, &display_w, &display_h);
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-            glfwSwapBuffers(window);
+            glfwSwapBuffers(s_ApplicationWindow);
             glfwPollEvents();
         }
         delete currentTest;
