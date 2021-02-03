@@ -111,6 +111,7 @@ void CameraController::OnUpdate(float timestep)
 
     // equivalent to translating to m_Position and rotating into coordinate space
     // specified by direction (z), up (y) and right (x) and inverting the result
+    // (because we are the camera and the world changes around us, not vice versa)
     glm::mat4 View = 
         glm::lookAt
         (
@@ -129,4 +130,5 @@ void CameraController::OnImguiRender()
     ImGui::Text("view direction x: %.3f y: %.3f z: %.3f", m_ViewDirection.x, m_ViewDirection.y, m_ViewDirection.z);
     ImGui::Text("up direction x: %.3f y: %.3f z: %.3f", m_Up.x, m_Up.y, m_Up.z);
     ImGui::Text("right direction x: %.3f y: %.3f z: %.3f", m_Right.x, m_Right.y, m_Right.z);
+    ImGui::Text("position x: %.3f y: %.3f z: %.3f", m_Position.x, m_Position.y, m_Position.z);
 }
